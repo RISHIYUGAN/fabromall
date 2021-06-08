@@ -1,0 +1,27 @@
+.header-container{
+    width:100%;
+    height:50px;
+    background-color:#3C72FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+.cart-icon>i{
+    color:white;
+    font-size: 20px;
+}
+.header-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 2px solid red; */
+}
+.title{
+    font-family: poppins-semib;
+    color: white;
+}
+.title>h3{
+    /* letter-spacing:1.4px; */
+    font-size: 22px;
+}

@@ -1,0 +1,129 @@
+.slick-dots{
+    position:absolute!important;
+    bottom: -25px!important;
+    width:50px!important;
+    display:flex!important;
+    margin-left: 50%!important;
+    transform: translate(-50%);
+}
+.slick-dots>li{
+    margin:0px!important;
+    padding:0px!important;
+    box-sizing: border-box;
+}
+.slick-dots>li>button::before,.slick-dots>li>button{
+    margin:0px!important;
+    padding:0px!important;
+    width:fit-content!important;
+    height: fit-content!important;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 2px solid red!important; */
+}
+.custom-slider{
+    max-width: 100%;
+}
+.slicker-container{
+    width:100%;
+    max-width:100%;
+    margin-top:25px;
+    position:relative
+    /* border: 2px solid red; */
+}
+
+.slicker-content{
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.each-slick{
+    width: 100%;
+    height:350px;
+    text-align: center;
+    padding:0px 10px;
+    box-sizing: border-box;
+    /* border:2px solid green */
+}
+.img-div{
+    background-color: #a8a8a8;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+}
+#quote-1{
+    color:rgba(255, 255, 255, 0.952);
+    position: absolute;
+    right:50px;
+    bottom:60px;
+    font-size: 36px;
+}
+#quote-3{
+    color:rgba(255, 255, 255, 0.842);
+    font-size: 36px;
+    /* position: absolute; */
+    /* top: 50%; */
+    /* left: 30px; */
+    /* transform: translateY(-50%); */
+}
+#quote-2{
+    color:rgb(255, 174, 53);
+    /* color:rgba(255, 255, 255, 0.959); */
+    font-size: 30px;
+    position: absolute;
+    bottom:20px;
+    text-shadow: 0px 0px 5px black;
+}
+.slick-dots li button:before{
+    font-size: 8px!important;
+}
+.slicker-button-div{
+    position: absolute;
+    top:0px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    /* border: 2px solid red; */
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.slick-button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 55px;
+    opacity: 62%;
+    padding:0px 15px;
+    cursor: pointer;
+}
+/* .slick-button>i{
+    text-shadow:0 0 8px rgb(0, 0, 0);
+} */
+.slick-button:hover{
+  opacity:0.85;
+}
+.slick-slide{
+    width:850px!important;
+}
+#slider-1{
+    background-image: url(../../Assets/images/home/slicker1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#slider-2{
+    background-image: url(../../Assets/images/home/slicker2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#slider-3{
+    background-image: url(../../Assets/images/home/slicker3.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
