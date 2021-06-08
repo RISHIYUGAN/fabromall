@@ -10,7 +10,7 @@ export const Home = () => {
   useEffect(()=>{
     AxiosInstance.post("/fetch_home_products")
     .then((res)=>{
-       console.log(res.data)
+      //  console.log(res.data)
        setTypes(res.data)
     })
   },[])
