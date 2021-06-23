@@ -26,7 +26,7 @@ export default class PreviousNextMethods extends Component {
       slidesToScroll: 1,
       centerMode:true,
       variableWidth:true,
-      // autoplay:true
+      autoplay:true
     };
     return (
       <div className="slicker-container">
@@ -49,7 +49,7 @@ export default class PreviousNextMethods extends Component {
             <div className="each-slick">
               <div className="img-div" id="slider-3">
               <h1 id="quote-2">
-                  Let your Surroundings<br/>look colourful
+                  Let your Surroundings<br/>Look Colourful
               </h1>
               </div>
             </div>

@@ -2,6 +2,7 @@ import React from "react"
 import {Route,Redirect} from "react-router-dom"
 import {connect} from "react-redux"
 import {Header} from "../header/header"
+import {Footer} from "../footer/footer"
 
 const PrivateRouter=(
     {
@@ -21,6 +22,7 @@ const PrivateRouter=(
            <Redirect to="/"/>
            </div>
        )}/>
+       <Footer/>
        </div>
     )
 }

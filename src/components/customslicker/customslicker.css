@@ -38,6 +38,8 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    /* border: 2px solid red; */
+    height:350px;
 }
 .each-slick{
     width: 100%;
@@ -98,7 +100,7 @@
     outline: none;
     color: white;
     font-size: 55px;
-    opacity: 62%;
+    opacity:0.62;
     padding:0px 15px;
     cursor: pointer;
 }

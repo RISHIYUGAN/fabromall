@@ -7,6 +7,14 @@
   src: url("./Assets/fonts/poppins/poppins-v5-latin-500.ttf");
 }
 @font-face {
+  font-family:poppins-bld;
+  src: url("./Assets/fonts/poppins/poppins-v5-latin-700.ttf");
+}
+@font-face {
+  font-family:poppins-reg;
+  src: url("./Assets/fonts/poppins/poppins-v5-latin-regular.ttf");
+}
+@font-face {
   font-family:poppins-300;
   src: url("./Assets/fonts/poppins/poppins-v5-latin-300.ttf");
 }

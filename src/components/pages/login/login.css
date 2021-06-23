@@ -1,0 +1,408 @@
+.login-image{
+    width:100vw;
+    background-image: url("../../../Assets/images/login/background.jpg");
+    height: 100vh;
+    background-position: center;
+    background-size: cover
+}
+.login-wrapper{
+   width: 1000px;
+   height:550px;
+   display:flex;
+   border-radius: 10px;
+   overflow: hidden;
+   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.623);
+}
+.side-image{
+  width:470px;
+  height:100%;
+  background-image: url("../../../Assets//images/login/tex.jpg");
+  background-position:0px -30px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.quote{
+  position: absolute;
+  bottom:40px;
+  right: 10px;
+  font-size: 28px;
+  width: 280px;
+  text-align: center;
+  color:#2965FE;
+  font-family:poppins-semib;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.25);
+}
+.Login-Container{
+  width:100vw;
+  height:100vh;
+  position:fixed;
+  top: 0px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.Login{
+  border-radius: 10px;
+  padding:10px 20px;
+  position: relative;
+}
+.sidebox{
+  flex-grow: 1;
+  height: 100%;
+  background-color:#5465FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+.user-div>i{
+  margin-top:10px!important;
+  margin-bottom: 0px!important;
+  padding: 0px!important;
+  font-size: 100px;
+  width:100%;
+  height: 100%;
+  color: white;
+  text-align: center;
+}
+.s-user-div>i{
+  margin-top:10px!important;
+  margin-bottom: 0px!important;
+  padding: 0px!important;
+  color:rgb(85, 73, 251);
+  text-align: center;
+}
+.s-user-div{
+  width:90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90px;
+  padding:20px 20px 30px 20px;
+  border-radius: 50%;
+  background-color: white;
+  margin-left: 50%;
+  transform: translate(-50%);
+  box-sizing: border-box;
+}
+.s-user-div>i{
+  padding: 0px!important;
+  font-size:50px;
+  color: white;
+  text-align: center;
+  margin-left: 10px;
+  color: rgb(85, 73, 251);
+}
+
+.Login-text{
+    color:white;
+    text-align: center;
+}
+form{
+  margin-top: 20px;
+}
+.division_1{
+    width:100%;
+    margin:30px auto 0px auto;
+    height: 30px;
+    border-bottom:2px solid white;
+    transition:border-bottom 1s;
+    display: flex;
+    padding:0px!important;
+  }
+  
+  .division_2>div>i,.division_1>div>i,.division_3>div>i,.division_4>div>i,.division_5>div>i{
+    width:20px;
+    text-align: end;
+    margin-right:5px;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+   vertical-align: bottom;
+  }
+  .division_2>i,.division_5>i{
+    font-size: 18px;
+     padding-left: 10px;
+     color: rgb(255, 255, 255);
+     cursor: pointer;
+     margin-right: 5px;
+  }
+  .division_2{
+    width:100%;
+    margin:auto;
+    height: 30px;
+    border-bottom:2px solid white;
+    transition:border-bottom 1s;
+    display: flex;
+    margin-top: 60px;
+  }
+  .contact-div{
+    margin:auto;
+    transition:border-bottom 1s;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap:30px;
+    margin-top: 25px;
+    max-width:400px!important;
+  }
+  .division_3{
+    margin:auto;
+    height: 30px;
+    transition:border-bottom 1s;
+    display: flex;
+    border-bottom:2px solid white;
+  }
+  input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+ 
+  .division_4{
+    width:100%;
+    margin:auto;
+    height: 30px;
+    border-bottom:2px solid white;
+    transition:border-bottom 1s;
+    display: flex;
+  }
+  .division_5{
+    width:100%;
+    margin:auto;
+    height: 30px;
+    border-bottom:2px solid white;
+    transition:border-bottom 1s;
+    display: flex;
+    
+  }
+  
+  .con-input{
+    outline:none;
+    border:none ;
+    color: white;
+    background-color:transparent;
+    -webkit-tap-highlight-color: none; 
+    font-family: poppins-500; 
+    font-size: 16px;
+    width:100%;
+  }
+.input{
+    outline:none;
+    border:none ;
+    width: 100%;
+    color: white;
+    background-color:transparent;
+    -webkit-tap-highlight-color: none; 
+    font-family: poppins-500; 
+    font-size: 16px;
+    width:300px;
+    flex-grow: 1;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  background-color: transparent;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #fff !important;
+    caret-color: white;
+}
+
+input:focus{
+  outline:none;
+  background-color: transparent;
+}
+
+.input::placeholder,.con-input::placeholder {
+    color:rgba(238, 238, 238, 0.678);
+    font-size:14px;
+    font-family: poppins-500;
+  }
+
+  .Submitbutton{
+      border:none;
+      border-radius: 5px; 
+      cursor: pointer;
+      outline:none;
+      background-color: white;
+      color:#5465FF; 
+      padding:5px 10px;
+  }
+  .forgot-pass{
+    color: white;
+    font-size: 15px;
+  }
+  .ExitButton{
+    cursor: pointer;
+    position:absolute;
+    top: 5px;
+    right:10px;
+    padding:0px 7px 4px 7px;
+    border-radius: 50%;
+    color: white;
+    font-size: 25px;
+  }
+ .new-user{
+   display: flex;
+   font-family: poppins-300;
+   text-align: center;
+   align-items: center;
+   justify-content: center;
+   margin-top: 20px;
+   color:rgb(246, 246, 246)
+ }
+
+  .Register{
+    color:orange;
+    font-family: poppins-300;
+    cursor: pointer;
+    font-size:18px;
+    margin-left: 10px!important;
+    padding: 0px !important;
+  }
+  .error{
+    color:orange;
+    font-family: poppins-reg;
+    font-size:15px;
+    text-align: center;
+  }
+  .confirm-signup{
+    width: 450px;
+    text-align: center;
+    color: white;
+  }
+  .verify-header{
+    margin-bottom: 40px;
+  }
+  .verify-input{
+    width:100px;
+    outline:none;
+    border:none;
+    height:25px;
+    border-radius: 5px;
+    margin-top: 30px;
+    background-color: white;
+    font-family: poppins-semib;
+    font-size: 18px;
+    text-align: center;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    line-height:5px;
+  }
+  .verify-input:-webkit-autofill{
+    color:black!important;
+    fill:black!important;
+    -webkit-text-fill-color: black !important;
+  }
+  .verify-input:-webkit-autofill:hover{
+    color:black!important;
+    fill:black!important;
+    -webkit-text-fill-color: black !important;
+  }
+  .verify-input:-webkit-autofill:focus{
+    color:black!important;
+    fill:black!important;
+    -webkit-text-fill-color: black !important;
+  }
+  .verify-input:hover{
+    box-shadow:0 0 10px rgba(82, 82, 82, 0.808)
+  }
+  .verify-input:focus{
+    box-shadow: none;
+    background-color: white;
+  }
+  .verify-content{
+    font-family:poppins-300;
+  }
+  .confirm-signup label{
+    margin-right:10px;
+    font-family:poppins-300;
+  }
+  .verify-btn{
+    width: 100%;
+    display: flex;
+    justify-content:flex-end;
+    margin-top: 30px;
+    
+  }
+  .verify-btn>button{
+    background-color: white;
+    border:none;
+    color:#5465FF;
+    padding:0px 10px;
+    font-family: poppins-semib;
+    border-radius: 5px;
+    font-size: 17px;
+    cursor: pointer;
+  }
+  .verify-error{
+    background-color: white;
+    color: red;
+    border-radius: 5px;
+    font-family: poppins-reg;
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    margin-left: 50%;
+    transform: translate(-50%);
+    width:0px;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: fit-content;
+    padding: 0px 0px;
+    transition:all 1s;
+    /* padding: 0px 5px; */
+  }
+@media only screen and (max-width:600px){
+    .Login{
+      font-family: poppins;
+  }
+  .division_1{
+    width:100%;
+    margin:auto;
+    height: 30px;
+    border-bottom:4px solid white;
+    transition:border-bottom 1s;
+  }
+  .division_2{
+    width:100%;
+    margin:auto;
+    height: 30px;
+    border-bottom:4px solid white;
+    transition:border-bottom 1s;
+  }
+  .division_3{
+    width:100%;
+    margin:auto;
+    height: 30px;
+    border-bottom:4px solid white;
+    transition:border-bottom 1s;
+  }
+  .division_4{
+    width:100%;
+    margin:auto;
+    height: 30px;
+    border-bottom:4px solid white;
+    transition:border-bottom 1s;
+  }
+  .division_5{
+    width:100%;
+    margin:auto;
+    height: 30px;
+    border-bottom:4px solid white;
+    transition:border-bottom 1s;
+  }
+}
+
+@media only screen and (min-width:1200px){
+  .login-wrapper{
+    width:1050px;
+    height:550px;
+  }
+}
