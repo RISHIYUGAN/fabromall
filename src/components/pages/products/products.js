@@ -132,7 +132,6 @@ const Products = (props) => {
         setPageLoad(true)
     AxiosInstance.post("/fetch_product", request).then((res) => {
       console.log(res.data);
-
       setProductslist(res.data.current.products);
       setTotPages(res.data.totalpages);
       setCurrentPage(res.data.current.currentpage);
@@ -242,9 +241,9 @@ const Products = (props) => {
     }
   };
   const pageset = (number) => {
-    console.log("pageset");
+    // console.log("pageset");
     if (number > 1 && number < totpages) {
-      console.log("pagesetif");
+      // console.log("pagesetif");
       setPages({
         prepage: number - 1,
         centpage: number,
@@ -261,14 +260,13 @@ const Products = (props) => {
         behavior: 'smooth'
       });
       setCurrentPage(number);
-      console.log("pageif2");
+      // console.log("pageif2");
       setTimeout(() => {
         if (
           number === parseInt(document.getElementById("pg-highlight").innerHTML)
         ) {
           var skip = (number - 1) * 12;
-          console.log("pagesetif3");
-         
+          // console.log("pagesetif3");
           AxiosInstance.post("/pagination", {
             skip: skip,
             limit: 12,
@@ -297,7 +295,7 @@ const Products = (props) => {
     var check2 = true;
     var type=e.target.sorting.value
     var sorttype=(type!==""?e.target.sorttype.value:null)
-    console.log(Object.keys(filtervaluecopy).length,Object.keys(filtervalues).length)
+    // console.log(Object.keys(filtervaluecopy).length,Object.keys(filtervalues).length)
     if(Object.keys(filtervaluecopy).length!==0&&Object.keys(filtervalues).length===0){
       check2=false
     }
@@ -307,16 +305,16 @@ const Products = (props) => {
         check2 = check2 && check;
       });
     }
-    console.log(
-     check2,
-     sorttype,sortCheck.sorttype,
-     sortCheck.type,type,
-     "...",!!check2===true,!!sortCheck.type==type,!!type!==""?(sortCheck.sorttype===sorttype):true,
-      "pump",!(check2===true&&!!(sortCheck.type===type)&&!!(type!==""?(sortCheck.sorttype===sorttype):true))
-      )
+    // console.log(
+    //  check2,
+    //  sorttype,sortCheck.sorttype,
+    //  sortCheck.type,type,
+    //  "...",!!check2===true,!!sortCheck.type==type,!!type!==""?(sortCheck.sorttype===sorttype):true,
+    //   "pump",!(check2===true&&!!(sortCheck.type===type)&&!!(type!==""?(sortCheck.sorttype===sorttype):true))
+    //   )
     if(!(check2===true&&!!(sortCheck.type===type)&&!!(type!==""?(sortCheck.sorttype===sorttype):true))){
-    console.log(check2);
-    console.log("entering filter");
+    // console.log(check2);
+    // console.log("entering filter");
     setPageLoad(true)
     AxiosInstance.post("/filter-sort", {
       filter: !check2,
@@ -348,7 +346,7 @@ const Products = (props) => {
 
   return (
     <div className="products-container">
-      {/* {console.log(filtervalues)} */}
+      {console.log("filtervalues---",filtervalues)}
       <div id="suggestion" className="suggestions-div">
         <div className="container">
           <div className="suggestions-wrapper">
