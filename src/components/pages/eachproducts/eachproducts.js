@@ -47,7 +47,7 @@ export const EachProducts = () => {
         review:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
       },
-    ],
+    ]
   });
   const marked = (rate) => {
     var rating = [];
@@ -97,6 +97,12 @@ export const EachProducts = () => {
     {value:4,label:4},
     {value:5,label:5},
   ]
+// var str='QA101'
+// var mat=str.match(/\d{3,}/)
+// console.log(mat)
+// if(str.match(/\d{3,4}$/)){
+//   console.log("mat",mat)
+// }
   return (
     <div className="each-prd-container">
       <div className="container">

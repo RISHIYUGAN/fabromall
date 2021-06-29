@@ -1,0 +1,113 @@
+.wishlist-title-div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+}
+.wishlist-title{
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+}
+.add-wish-button{
+    border: none;
+    outline: none;
+    background-color:#FF6F6F;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-family:poppins-semib;
+    font-size:14px;
+}
+.each-wishlist-div{
+    margin-top: 50px;
+}
+.each-wishlist{
+    margin-top: 30px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow:0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.wishlist-name{
+    width:100%;
+    background-color:#E4E4E4;
+    display: flex;
+    align-items: center;
+    padding:5px 10px;
+}
+.wishlist-name i{
+    color:rgba(255, 87, 87, 1);
+}
+.wishlist-products{
+    padding:10px 10px;
+    display: grid;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    box-sizing: border-box;
+}
+.wish-each-product{
+    border:1px solid rgba(130, 130, 130, 1);
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    padding:5px 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    align-items: center;
+    font-family: poppins-500;
+    position: relative;
+}
+.wish-prd-img-div{
+    width:180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.wish-prd-img-div>img{
+    max-width: 100%;
+    max-height: 100%;
+}
+.wish-each-product i{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+.more-icon-div{
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    /* border: 1px solid red; */
+    width: 20px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius:50%;
+    box-shadow:0px 0px 4px rgba(255, 255, 255, 0.678);
+    background-color: rgba(255, 255, 255, 0.479);
+}
+.more-icon-div>div{
+    width:3px;
+    height: 3px;
+    background-color: black;
+    margin:1px 0px;
+    border-radius: 50%;
+}
+/* .wish-more-div>div{
+    width:6px;
+    height:6px;
+    margin-bottom:2px;
+    border-radius:50%;
+    box-shadow:inset 1px 1px 10px rgba(0, 0, 0, 0.25);
+    background-color:black;
+    overflow: hidden;
+    outline: none;
+    border: none;
+    transform: scale(0.5);
+} */

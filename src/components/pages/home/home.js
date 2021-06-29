@@ -101,13 +101,10 @@ useEffect(()=>{
                               })
                             })
                             .then((res)=>{
+                              var json=JSON.stringify(res)
+                              localStorage.setItem("prdcts",json)
                               history.push(
-                                {
-                                  pathname:"products",
-                                  state:{
-                                    product:res
-                                  }
-                                }
+                               "/products"
                               )
                             })
                           }}>

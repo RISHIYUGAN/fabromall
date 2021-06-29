@@ -22,8 +22,8 @@ const Products = (props) => {
     "Apron",
   ]);
   const [searchfilter, setSearchFilter] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totpages, setTotPages] = useState(10);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totpages, setTotPages] = useState(0);
   const [sorts, setSorts] = useState(["Price", "Rating"]);
   const [filters, setFilters] = useState([
     {
@@ -40,7 +40,7 @@ const Products = (props) => {
               250
             </span>
           ),
-          value: "null-300",
+          value: "0-250",
         },
         {
           label: (
@@ -77,51 +77,76 @@ const Products = (props) => {
               1000
             </span>
           ),
-          value: "1000-null",
+          value: "1000-",
         },
       ],
     },
     {
       placeholder: "Rating",
       value: [
-        { value: "chocolate", label: "Chocolate" },
-        { value: "strawberry", label: "Strawberry" },
-        { value: "vanilla", label: "Vanilla" },
+        { value: "1", label: "above 1" },
+        { value: "2", label: "above 2" },
+        { value: "3", label: "above 3" },
+        { value: "4", label: "above 4" },
       ],
     },
     {
       placeholder: "Sold rate",
       value: [
         { value: "chocolates", label: "Chocolates" },
-        { value: "strawberries", label: "Strawberries" },
+        { value: "strawberries", label: "Strawberriessssssssssssssssssss" },
         { value: "vanillas", label: "Vanillas" },
       ],
     },
   ]);
+  const [filterState, setFilterState] = useState({});
+  const [filtervalues, setFiltervalues] = useState({});
+  const [sortvalue, setSortvalue] = useState([
+    { value: "Ascending", label: "Ascending" },
+  ]);
+  const [sortCheck,setSortCheck]=useState({
+    type:"",
+    sorttype:"Ascending"
+  })
   const [suggestvalue, setSuggestvalue] = useState("");
   const [searchsuggest, setSearchSuggest] = useState([]);
+  const [sorttype, setSorttype] = useState();
+  const [filtervaluecopy, setFiltervaluecopy] = useState({});
+  const [filtering,setfiltering]=useState(false)
+  const [disableSort,setDisableSort]=useState(true)
+  const [pageLoad,setPageLoad]=useState(true)
 
   useEffect(() => {
     window.addEventListener("scroll", handlescroll);
-    var request=history.location.state?history.location.state.product:[{categoryname: "Bedroom",
-    categoryvalue: "Bedroom",
-    typename: "Bedsheet",
-    typevalue: "Bedsheet",
-  }]
-    AxiosInstance.post("/fetch_product",request).then(
-      (res) => {
-        console.log(res.data.current);
-        setProductslist(res.data.current.products);
-        setTotPages(res.data.totalpages);
-        setCurrentPage(res.data.current.currentpage);
-        setPages({
-          prepage: res.data.totalpages >= 1 && 1,
-          centpage: res.data.totalpages >= 2 && 2,
-          postpage: res.data.totalpages >= 3 && 3,
-        });
-      }
-    );
-    console.log(history.location);
+    const local = localStorage.getItem("prdcts");
+    var request = local
+      ? JSON.parse(local)
+      : [
+          {
+            categoryname: "Bedroom",
+            categoryvalue: "Bedroom",
+            typename: "Bedsheet",
+            typevalue: "Bedsheet",
+          },
+        ];
+        setPageLoad(true)
+    AxiosInstance.post("/fetch_product", request).then((res) => {
+      console.log(res.data);
+
+      setProductslist(res.data.current.products);
+      setTotPages(res.data.totalpages);
+      setCurrentPage(res.data.current.currentpage);
+      setPages({
+        prepage: res.data.totalpages >= 1 && 1,
+        centpage: res.data.totalpages >= 2 && 2,
+        postpage: res.data.totalpages >= 3 && 3,
+      });
+      setPageLoad(false)
+    })
+    .catch(()=>{
+      setPageLoad(false)
+    })
+    // console.log(history.location);
     return () => {
       window.removeEventListener("scroll", handlescroll);
     };
@@ -132,8 +157,8 @@ const Products = (props) => {
   }, [props.suggestions]);
 
   useEffect(() => {
-    if(suggestvalue===""){
-      setSearchFilter([])
+    if (suggestvalue === "") {
+      setSearchFilter([]);
       return 0;
     }
     var arr = searchsuggest.filter((sug) => {
@@ -150,7 +175,6 @@ const Products = (props) => {
         "0 0 10px rgba(0, 0, 0, 0.5)";
     }
   };
-
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
@@ -194,11 +218,14 @@ const Products = (props) => {
   };
   const searchprd = (e) => {
     e.preventDefault();
+    setPageLoad(true)
     e.target.search.blur();
-    if(searchfilter.length!==0){
-      console.log("entering")
-      AxiosInstance.post("/fetch_product",searchfilter).then((res) => {
+    if (searchfilter.length !== 0) {
+      console.log("entering");
+      AxiosInstance.post("/fetch_product", searchfilter).then((res) => {
         console.log(res.data);
+        var json = JSON.stringify(searchfilter);
+        localStorage.setItem("prdcts", json);
         setProductslist(res.data.current.products);
         setTotPages(res.data.totalpages);
         setCurrentPage(res.data.current.currentpage);
@@ -207,11 +234,17 @@ const Products = (props) => {
           centpage: res.data.totalpages >= 2 && 2,
           postpage: res.data.totalpages >= 3 && 3,
         });
-      });
+        setPageLoad(false)
+      })
+      .catch(()=>{
+        setPageLoad(false)
+      })
     }
   };
   const pageset = (number) => {
+    console.log("pageset");
     if (number > 1 && number < totpages) {
+      console.log("pagesetif");
       setPages({
         prepage: number - 1,
         centpage: number,
@@ -219,12 +252,23 @@ const Products = (props) => {
       });
     }
     if (number >= 1 && number <= totpages) {
+      setTimeout(()=>{
+        setPageLoad(true)
+      },500)
+      
+      window.scroll({
+        top: 0,
+        behavior: 'smooth'
+      });
       setCurrentPage(number);
+      console.log("pageif2");
       setTimeout(() => {
         if (
           number === parseInt(document.getElementById("pg-highlight").innerHTML)
         ) {
           var skip = (number - 1) * 12;
+          console.log("pagesetif3");
+         
           AxiosInstance.post("/pagination", {
             skip: skip,
             limit: 12,
@@ -239,14 +283,72 @@ const Products = (props) => {
                 postpage: number + 1,
               });
             }
-          });
+            setPageLoad(false)
+          })
+          .catch(()=>{
+            setPageLoad(false)
+          })
         }
       }, 1000);
     }
   };
+  const filtersort = (e) => {
+    e.preventDefault();
+    var check2 = true;
+    var type=e.target.sorting.value
+    var sorttype=(type!==""?e.target.sorttype.value:null)
+    console.log(Object.keys(filtervaluecopy).length,Object.keys(filtervalues).length)
+    if(Object.keys(filtervaluecopy).length!==0&&Object.keys(filtervalues).length===0){
+      check2=false
+    }
+    else{
+      Object.keys(filtervalues).forEach((element, index) => {
+        var check = filtervalues[element] === filtervaluecopy[element];
+        check2 = check2 && check;
+      });
+    }
+    console.log(
+     check2,
+     sorttype,sortCheck.sorttype,
+     sortCheck.type,type,
+     "...",!!check2===true,!!sortCheck.type==type,!!type!==""?(sortCheck.sorttype===sorttype):true,
+      "pump",!(check2===true&&!!(sortCheck.type===type)&&!!(type!==""?(sortCheck.sorttype===sorttype):true))
+      )
+    if(!(check2===true&&!!(sortCheck.type===type)&&!!(type!==""?(sortCheck.sorttype===sorttype):true))){
+    console.log(check2);
+    console.log("entering filter");
+    setPageLoad(true)
+    AxiosInstance.post("/filter-sort", {
+      filter: !check2,
+      ...filtervalues,
+      type:type!==""?type.toLowerCase():null,
+      sorttype:type!==""?sorttype.toLowerCase():null,
+    }).then((res) => {
+      console.log(res.data);
+      setProductslist(res.data.current.products);
+      setTotPages(res.data.totalpages);
+      setCurrentPage(res.data.current.currentpage);
+      setPages({
+        prepage: res.data.totalpages >= 1 && 1,
+        centpage: res.data.totalpages >= 2 && 2,
+        postpage: res.data.totalpages >= 3 && 3,
+      });
+      setFiltervaluecopy(filtervalues);
+      setSortCheck({
+        type:type,
+        sorttype:sorttype
+      })
+      setPageLoad(false)
+    })
+    .catch(()=>{
+      setPageLoad(false)
+    })
+  }
+  };
 
   return (
     <div className="products-container">
+      {/* {console.log(filtervalues)} */}
       <div id="suggestion" className="suggestions-div">
         <div className="container">
           <div className="suggestions-wrapper">
@@ -265,33 +367,29 @@ const Products = (props) => {
               ))}
             </div>
             <ProductSearch
-            suggestvalue={suggestvalue}
-            setSuggestvalue={(e)=> setSuggestvalue(e.target.value)}
-            focus={() => {
-              document.getElementById(
-                "pseudo-placeholder"
-              ).style.display = "none";
-              if(searchfilter.length!==0)
-              document.getElementById("show-sugs").style.display="block"
-            }}
-            blur={
-              (e) => {
-                setTimeout(()=>{
-                  document.getElementById("show-sugs").style.display="none"
-                },150)
+              suggestvalue={suggestvalue}
+              setSuggestvalue={(e) => setSuggestvalue(e.target.value)}
+              focus={() => {
+                document.getElementById("pseudo-placeholder").style.display =
+                  "none";
+                if (searchfilter.length !== 0)
+                  document.getElementById("show-sugs").style.display = "block";
+              }}
+              blur={(e) => {
+                setTimeout(() => {
+                  document.getElementById("show-sugs").style.display = "none";
+                }, 150);
                 if (e.target.value === "")
-                  document.getElementById(
-                    "pseudo-placeholder"
-                  ).style.display = "block";
-              }
-            }
-            searchfilter={searchfilter}
-            setSuggestvaluetype={(typename)=>{
-              setSuggestvalue(typename)
-            }}
-            searchprd={(e) => {
-              searchprd(e);
-            }}
+                  document.getElementById("pseudo-placeholder").style.display =
+                    "block";
+              }}
+              searchfilter={searchfilter}
+              setSuggestvaluetype={(typename) => {
+                setSuggestvalue(typename);
+              }}
+              searchprd={(e) => {
+                searchprd(e);
+              }}
             />
           </div>
         </div>
@@ -300,42 +398,94 @@ const Products = (props) => {
         <div className="product-content">
           <div className="products-display-div">
             <div className="filter-sort">
-              <div className="filter-div">
-                <div className="filt-title">
-                  <div>
-                    <i class="fas fa-filter"></i>
-                  </div>
-                  <div className="filt-tit-text">Filter by</div>
-                </div>
-                <div className="filters">
-                  {filters.map((option) => (
-                    <div className="select-div">
-                      <Select
-                        options={option.value}
-                        styles={customStyles}
-                        placeholder={option.placeholder}
-                      />
+              <form
+                onSubmit={(e) => {
+                  filtersort(e);
+                }}
+              >
+                <div className="filter-div">
+                  <div className="filt-title">
+                    <div>
+                      <i class="fas fa-filter"></i>
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className="sort-div" style={{ marginTop: "35px" }}>
-                <div className="sort-title">
-                  <div>
-                    <i class="fas fa-sort-amount-down"></i>
+                    <div className="filt-tit-text">Filter by</div>
                   </div>
-                  <div className="sort-tit-text">Sort by</div>
+                  <div className="filters">
+                    {filters.map((option) => (
+                      <div className="select-div">
+                        <Select
+                          value={
+                            filterState[
+                              `${option.placeholder
+                                .split(" ")[0]
+                                .toLowerCase()}`
+                            ]
+                              ? filterState[
+                                  `${option.placeholder
+                                    .split(" ")[0]
+                                    .toLowerCase()}`
+                                ]
+                              : null
+                          }
+                          options={option.value}
+                          styles={customStyles}
+                          placeholder={option.placeholder}
+                          onChange={(e) => {
+                            console.log("running");
+                            setFiltervalues({
+                              ...filtervalues,
+                              [`${option.placeholder
+                                .split(" ")[0]
+                                .toLowerCase()}`]: e ? e.value : null,
+                            });
+                            setFilterState({
+                              ...filterState,
+                              [`${option.placeholder
+                                .split(" ")[0]
+                                .toLowerCase()}`]: e ? e : null,
+                            });
+                          }}
+                          isClearable={true}
+                        />
+                      </div>
+                    ))}
+                    {/* {console.log("filt-val", filtervalues)} */}
+                  </div>
+                  <div className="sort-btn-div">
+                  <button
+                  onClick={() => {
+                    setFilterState({});
+                    setFiltervalues({})
+                  }}
+                  className="reset-filt-div"
+                >
+                  Reset filter
+                </button>
                 </div>
-                <div className="sorts">
-                  <form onChange={(e) => console.log(e.target.value)}>
+                </div>
+                
+                <div className="sort-div" style={{ marginTop: "35px" }}>
+                  <div className="sort-title">
+                    <div>
+                      <i class="fas fa-sort-amount-down"></i>
+                    </div>
+                    <div className="sort-tit-text">Sort by</div>
+                  </div>
+                  <div className="sorts">
                     {sorts.map((sort) => (
                       <div className="check-div">
                         <label for={sort}>
+                         
                           <input
                             type="radio"
                             id={sort}
                             name="sorting"
                             value={sort}
+                            onChange={(e)=>{
+                              if(disableSort===true){
+                                setDisableSort(false)
+                              }
+                            }}
                           />
                           <div className="custom-radio">
                             <i class="fas fa-check"></i>
@@ -344,22 +494,46 @@ const Products = (props) => {
                         </label>
                       </div>
                     ))}
-                  </form>
-                  <div className="sort-select">
-                    <Select
-                      options={[
-                        { value: "Ascending", label: "Ascending" },
-                        { value: "Descending", label: "Descending" },
-                      ]}
-                      styles={customStyles}
-                      defaultValue={[
-                        { value: "Ascending", label: "Ascending" },
-                      ]}
-                    />
+                    <div className="sort-select">
+                      <Select
+                        options={[
+                          { value: "Ascending", label: "Ascending" },
+                          { value: "Descending", label: "Descending" },
+                        ]}
+                        styles={customStyles}
+                        value={sortvalue}
+                        name="sorttype"
+                        onChange={(e) => setSortvalue(e)}
+                        isDisabled={disableSort}
+                      />
+                    </div>
+                  </div>
+                  <div className="sort-btn-div">
+                  <button
+                onClick={() => {
+                  document.getElementsByName("sorting").forEach((el)=>{
+                    el.checked=false
+                  })
+                  setDisableSort(true)
+                  setSortvalue([{ value: "Ascending", label: "Ascending" }]);
+                }}
+                className="reset-filt-div"
+              >
+                Reset Sort
+              </button>
                   </div>
                 </div>
-              </div>
+                <div className="apply-btn-div">
+                    <button className="filter-btn">Apply</button>
+                  </div>
+              </form>
+              
             </div>
+            {pageLoad?
+              <div className="page-loading">
+ <i class="fas fa-circle-notch fa-spin"></i>
+              </div>
+              :
             <div className="pds-list">
               {productslist.map((product) => (
                 <div className="each-prdct">
@@ -390,7 +564,9 @@ const Products = (props) => {
                   </div>
                 </div>
               ))}
+              
             </div>
+             } 
           </div>
           <div className="pagination">
             <div className="page-show">

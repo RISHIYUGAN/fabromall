@@ -8,6 +8,7 @@ const PrivateRouter=(
     {
         isAuthenticated,
         component:Component,
+        footer,
         ...rest
     }
 )=>{
@@ -22,7 +23,7 @@ const PrivateRouter=(
            <Redirect to="/"/>
            </div>
        )}/>
-       <Footer/>
+       {footer===true&&<Footer/>}
        </div>
     )
 }
