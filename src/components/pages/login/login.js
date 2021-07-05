@@ -131,11 +131,11 @@ const Login = (props) => {
             setTimeout(() => {
               setConfirmSignup(false);
               setSignup(false);
-              setCode("")
+              setCode("");
             }, 2500);
             document.getElementById("verify-error").innerHTML =
               "Signup Successful";
-            document.getElementById("verify-error").style.color="green"
+            document.getElementById("verify-error").style.color = "green";
             document.getElementById("verify-error").style.padding = "0px 5px";
             document.getElementById("verify-error").style.width = "100%";
             setTimeout(() => {
@@ -145,7 +145,7 @@ const Login = (props) => {
           } else {
             document.getElementById("verify-error").innerHTML =
               "OTP is Incorrect! Please verify and try again";
-            document.getElementById("verify-error").style.color="red"
+            document.getElementById("verify-error").style.color = "red";
             document.getElementById("verify-error").style.padding = "0px 5px";
             document.getElementById("verify-error").style.width = "100%";
             setTimeout(() => {
@@ -156,7 +156,7 @@ const Login = (props) => {
         } else {
           document.getElementById("verify-error").innerHTML =
             "Too many attempts! Please verify your mail and try again";
-          document.getElementById("verify-error").style.color="red"
+          document.getElementById("verify-error").style.color = "red";
           document.getElementById("verify-error").style.padding = "0px 5px";
           document.getElementById("verify-error").style.width = "100%";
 
@@ -309,7 +309,7 @@ const Login = (props) => {
                 onClick={() => {
                   setSignup(!signup);
                   setConfirmSignup(false);
-                  setCode("")
+                  setCode("");
                 }}
               >
                 x

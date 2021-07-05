@@ -22,8 +22,8 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-column-gap: 15px;
-  grid-row-gap: 15px;
+  grid-column-gap: 25px;
+  grid-row-gap: 30px;
   margin-top: 40px;
 }
 .e-cart-prd {
@@ -31,10 +31,12 @@
   border-radius: 5px;
   width: 100%;
   box-sizing: border-box;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-top: 1px solid #EFEFEF;
   display: flex;
   align-items: center;
   background-color: white;
+  position: relative;
 }
 .e-cart-rating {
   margin-top: 15px;
@@ -76,7 +78,7 @@
   font-family: poppins-500;
   margin-top: 0px !important;
 }
-.e-cart-price-div {
+.e-cart-price-div{
   display: flex;
   font-family: poppins-reg;
   margin-top:25px;
@@ -125,6 +127,7 @@
 .qty-div {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 30px;
 }
 .qty-div i {
@@ -142,26 +145,40 @@
     padding:5px 10px;
     border-radius:5px;
     border: none;
-    background-color:rgb(40, 165, 40);
+    background-color:#448fff;
     color: white;
     font-family: poppins-semib;
-    font-size:16px;
+    font-size:14px;
     cursor: pointer;
 }
 .remove-cart-button{
-    width:100%;
-    padding:5px 10px;
-    border-radius:5px;
+    width:30px;
+    height: 30px;
+    padding:5px;
+    border-radius:50%;
     border: none;
-    background-color: #FF5E5E;
-    color: white;
+    background-color: white;
+    color: #FF5E5E;
     font-family: poppins-semib;
-    font-size:16px;
+    font-size:14px;
     cursor: pointer;  
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+.remove-cart-button:hover{
+  background-color: #FF5E5E;
+  color:white ;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
 }
 #cart-stock-div{
     margin-top: 0px;
     font-size: 14px;
+    color:rgb(77, 94, 255)
 }
 #cart-stock-icon{
     font-size: 14px;
@@ -170,4 +187,15 @@
 }
 .stock-out{
     color: red;
+}
+.cart-unadded-wish{
+   color:blue;
+   font-family:poppins-500;
+   font-size:15px;
+   cursor: pointer;
+}
+.cart-added-wish{
+  color:blue;
+  font-family:poppins-500;
+  font-size:15px;
 }

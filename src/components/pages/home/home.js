@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom";
 const Home = (props) => {
   const [types, setTypes] = useState({});
 
-  const [suggest,setSuggest]=useState([])
+  const [suggest, setSuggest] = useState([]);
 
   useEffect(() => {
     AxiosInstance.get("/fetch_home_products").then((res) => {
@@ -19,13 +19,13 @@ const Home = (props) => {
     });
   }, []);
 
-useEffect(()=>{
-  setSuggest(props.suggestions)
-},[props.suggestions])
+  useEffect(() => {
+    setSuggest(props.suggestions);
+  }, [props.suggestions]);
 
   return (
     <div className="home-container">
-      <div className="container">  
+      <div className="container">
         <div>
           <PreviousNextMethods />
         </div>
@@ -70,7 +70,9 @@ useEffect(()=>{
                 )}
                 <div className="type-container">
                   <div className="type-title-div">
-                    <div className="type-title">{type[0].toUpperCase()+type.slice(1,)} fabrics</div>
+                    <div className="type-title">
+                      {type[0].toUpperCase() + type.slice(1)} fabrics
+                    </div>
                     <div className="line"></div>
                   </div>
                   <div
@@ -89,25 +91,32 @@ useEffect(()=>{
                     {Object.values(types)[index].map((cat, ind) => (
                       <div className="each-product">
                         {ind === 5 && (
-                          <div id={"homeshow-" + index} className="hover-div" onClick={()=>{
-                            new Promise((resolve)=>{
-                              var filt=[]
-                              suggest.filter((sug)=>{
-                                if(sug.typename.toLowerCase().includes(type.toLowerCase())){
-                                  filt=[...filt,sug]
-                                  resolve(filt)
-                                }
-                                return sug.typename.toLowerCase().includes(type.toLowerCase());
-                              })
-                            })
-                            .then((res)=>{
-                              var json=JSON.stringify(res)
-                              localStorage.setItem("prdcts",json)
-                              history.push(
-                               "/products"
-                              )
-                            })
-                          }}>
+                          <div
+                            id={"homeshow-" + index}
+                            className="hover-div"
+                            onClick={() => {
+                              new Promise((resolve) => {
+                                var filt = [];
+                                suggest.filter((sug) => {
+                                  if (
+                                    sug.typename
+                                      .toLowerCase()
+                                      .includes(type.toLowerCase())
+                                  ) {
+                                    filt = [...filt, sug];
+                                    resolve(filt);
+                                  }
+                                  return sug.typename
+                                    .toLowerCase()
+                                    .includes(type.toLowerCase());
+                                });
+                              }).then((res) => {
+                                var json = JSON.stringify(res);
+                                localStorage.setItem("prdcts", json);
+                                history.push("/products");
+                              });
+                            }}
+                          >
                             <div>See More</div>
                             <i class="fas fa-arrow-circle-right"></i>
                           </div>
@@ -135,7 +144,7 @@ useEffect(()=>{
   );
 };
 
-const mapStateToProps=(state)=>({
-  suggestions:state.Suggestions
-})
+const mapStateToProps = (state) => ({
+  suggestions: state.Suggestions,
+});
 export default connect(mapStateToProps)(Home);

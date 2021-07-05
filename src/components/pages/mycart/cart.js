@@ -1,150 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./cart.css";
+import Wishlistpop from "../mywishlist/wishlistpopup";
+import AxiosInstance from "../../axios/axiosInstance";
+import { Loader } from "../../utility/loader/loader";
+
 
 const Cart = () => {
-  const [mycart, setMycart] = useState([
-    {
-      img: "https://firebasestorage.googleapis.com/v0/b/fabromal-gdn.appspot.com/o/bedsheet%2F104%20TC%20Cotton%20Double%20Floral%20Bedsheet(235-220cm)-399.jpeg?alt=media&token=5fe94faa-e093-4fdc-ae5e-bf28a6398025",
-      name: "104 TC Cotton Double Floral Bedsheet",
-      rating: 4,
-      wishlist: false,
-      cart: false,
-      stock: true,
-      offer: 10,
-      price: 399,
-      cartprice: 399,
-      qty: 1,
-      description: {
-        size: "235 X 220cm",
-        color: "Multicolor",
-        package: "1",
-      },
-      model_number: "BE101T01",
-      customer_review: [
-        {
-          name: "parthi vijay151",
-          profile: "",
-          likes: 5,
-          liked: false,
-          rating: 3,
-          review:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
-        },
-        {
-          name: "Sam Billy",
-          profile: "",
-          likes: 2,
-          liked: false,
-          rating: 3,
-          review:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
-        },
-        {
-          name: "Rishi 2001",
-          profile: "",
-          likes: 4,
-          liked: true,
-          rating: 3,
-          review:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
-        },
-      ],
-    },
-    {
-      img: "https://firebasestorage.googleapis.com/v0/b/fabromal-gdn.appspot.com/o/quilt%2FCartoon%20Single%20Dohar%20%20(Microfiber%2C%20Blue%20Angry%20Birds%2C%20Blue%20Angry%20Birds)(240-220cm)-399.jpeg?alt=media&token=f29688a5-36d7-4398-9477-23fcb550613f",
-      name: "104 TC Cotton Double Floral Bedsheet",
-      rating: 4,
-      wishlist: false,
-      cart: false,
-      stock: true,
-      offer: 10,
-      price: 599,
-      cartprice: 599,
-      qty: 1,
-      description: {
-        size: "235 X 220cm",
-        color: "Multicolor",
-        package: "1",
-      },
-      model_number: "BE101T01",
-      customer_review: [
-        {
-          name: "parthi vijay151",
-          profile: "",
-          likes: 5,
-          liked: false,
-          rating: 3,
-          review:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
-        },
-        {
-          name: "Sam Billy",
-          profile: "",
-          likes: 2,
-          liked: false,
-          rating: 3,
-          review:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
-        },
-        {
-          name: "Rishi 2001",
-          profile: "",
-          likes: 4,
-          liked: true,
-          rating: 3,
-          review:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
-        },
-      ],
-    },
-    {
-        img: "https://firebasestorage.googleapis.com/v0/b/fabromall.appspot.com/o/kitchen_towel%2FCotton%20Colors%20Color%20Printed%206%20Multicolor%20Napkins%20%20(6%20Sheets)-380.jpeg?alt=media&token=014f3319-5e17-4cd6-868f-da01f350a78c",
-        name: "104 TC Cotton Double Floral Bedsheet",
-        rating: 4,
-        wishlist: false,
-        cart: false,
-        stock: false,
-        offer: 10,
-        price: 599,
-        cartprice: 599,
-        qty: 1,
-        description: {
-          size: "235 X 220cm",
-          color: "Multicolor",
-          package: "1",
-        },
-        model_number: "BE101T01",
-        customer_review: [
-          {
-            name: "parthi vijay151",
-            profile: "",
-            likes: 5,
-            liked: false,
-            rating: 3,
-            review:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
-          },
-          {
-            name: "Sam Billy",
-            profile: "",
-            likes: 2,
-            liked: false,
-            rating: 3,
-            review:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
-          },
-          {
-            name: "Rishi 2001",
-            profile: "",
-            likes: 4,
-            liked: true,
-            rating: 3,
-            review:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
-          },
-        ],
-      },
-  ]);
+  const [mycart, setMycart] = useState([]);
+  const [wishpop, setWishPop] = useState(false);
+  const [popproduct, setPopproduct] = useState({});
+  const [addwish, setAddwish] = useState(false);
+  const [adding,setAdding]=useState(false)
+  const [addload,setAddload]=useState(false)
+  const [pageloading,setPageloading]=useState(true)
+  const [delload,setDelload] = useState(false)
+  const [deleting,setDeleting] = useState(false)
+
+  useEffect(()=>{
+   AxiosInstance.post("view-cart")
+   .then((res)=>{
+    setMycart(res.data)
+    setPageloading(false)
+   })
+  },[])
 
   const marked = (rate) => {
     var rating = [];
@@ -160,9 +38,68 @@ const Cart = () => {
       ];
     return rating;
   };
+  const addtowish=(e)=>{
+    e.preventDefault()
+    console.log("entering add")
+    if(adding==false){
+      setAdding(true)
+      setAddload(true);
+    const name=e.target.childNodes[1].textContent
+    console.log(name,popproduct)
+    AxiosInstance.post("/add-wishlist",{
+      name:name,
+      product:[popproduct]
+    })
+    .then((res) => {
+      console.log(res.data);
+      setAddload(false);
+      setAdding(false)
+    })
+    .catch(() => {
+      setAddload(false);
+      setAdding(false)
+    });
+  }
+  }
+// cartprice
+// discount
+  const deletecart=(product)=>{
+    if(deleting==false){
+      setDeleting(true)
+      setDelload(true)
+      AxiosInstance.post("deletefrom-cart",{product})
+      .then((res)=>{
+        setMycart(res.data)
+        setDeleting(false)
+        setDelload(true)
+      })
+      .catch((error)=>{
+        setDeleting(false)
+        if(error){
+          console.log(error.message)
+        }
+      })
+    }
+  }
 
   return (
     <div className="my-cart-container">
+      <Wishlistpop
+        wishpop={wishpop}
+        cancelpop={() => {
+          setWishPop(false);
+          setAddwish(false);
+        }}
+        popproduct={popproduct}
+        addwish={addwish}
+        setAddwish={() => setAddwish(true)}
+        popbtn={true}
+        addtowish={(e)=>addtowish(e)}
+        adding={adding}
+        setAdding={(bool)=>setAdding(bool)}
+        addload={addload}
+        setAddload={(bool)=>setAddload(bool)}
+      />
       <div className="container">
         <div className="cart-title">
           <div className="my-cart-icon">
@@ -174,24 +111,28 @@ const Cart = () => {
           </div>
         </div>
         <div className="cart-list">
-          {mycart.map((eacprd, index) => (
+         
+          {pageloading ? (
+            <Loader className="wish-loader" />
+          ) :mycart.length!==0?mycart.map((eacprd, index) => (
             <div className="e-cart-prd">
               <div className="e-cart-prd-des">
                 <div className="e-cart-name">{eacprd.name}</div>
                 <div className="e-cart-rating">
-                    <div>
+                  <div>
                     {marked(eacprd.rating)} {eacprd.rating}.0
-                    </div>
-                  <div className="stock-div" id="cart-stock-div">
-                {eacprd.stock ? (
-                  <div className="stock-in">
-                    <i id="cart-stock-icon" class="fas fa-check-circle"></i>
-                    Stock Available
                   </div>
-                ) : (
-                  <div className="stock-out">Out of Stock !</div>
-                )}
-              </div>
+                  <div className="stock-div" id="cart-stock-div">
+                    {/* {eacprd.stock ? (
+                      <div className="stock-in">
+                        <i id="cart-stock-icon" class="fas fa-check-circle"></i>
+                        Stock Available
+                      </div>
+                    ) : (
+                      <div className="stock-out">Out of Stock !</div>
+                    )} */}
+                    pack of&nbsp;&nbsp;{eacprd.description.package}
+                  </div>
                 </div>
                 <div className="e-cart-price-div">
                   <div className="e-cart-ogn-price">
@@ -215,12 +156,18 @@ const Cart = () => {
                     {eacprd.wishlist ? (
                       <div className="cart-added-wish">
                         <i class="fas fa-heart"></i>{" "}
-                        <text>Added to wishlist</text>
+                        <text>Added to wishList</text>
                       </div>
                     ) : (
-                      <div className="cart-unadded-wish">
+                      <div
+                        className="cart-unadded-wish"
+                        onClick={() => {
+                          setPopproduct(eacprd);
+                          setWishPop(true);
+                        }}
+                      >
                         <i class="far fa-heart"></i>{" "}
-                        <text>Add to wishlist</text>
+                        <text>Add to wishList</text>
                       </div>
                     )}
                   </div>
@@ -256,23 +203,31 @@ const Cart = () => {
                   </div>
                 </div>
                 <div className="remove-cart-button-div">
-                <button className="order-cart-button">
-                <i class="fas fa-box"></i> &nbsp;Place Order
-               </button>&nbsp;&nbsp;
-               <button className="remove-cart-button" onClick={()=>{
-                   var cpy=[...mycart]
-                   cpy.splice(index,1)
-                   setMycart(cpy)
-               }}>
-               <i class="fas fa-trash"></i> &nbsp;Remove
-               </button>
-              </div>
+                  <button className="order-cart-button">
+                    <i class="fas fa-box"></i> &nbsp;Place Order
+                  </button>
+                  <button
+                    className="remove-cart-button"
+                    onClick={() => {
+                      deletecart(eacprd)
+                    }}
+                  >
+                    {delload?<Loader/>: <i class="fas fa-trash"></i>}
+                  </button>
+                </div>
               </div>
               <div className="e-cart-img-div">
                 <img src={eacprd.img} className="e-cart-img" />
               </div>
             </div>
-          ))}
+          )): <div className="wish-empty">
+          You <text style={{ color: "red" }}>haven't</text> added anything
+          to your Cart
+          <h4>
+            <i class="fas fa-shopping-cart" />
+            Shop Now
+          </h4>
+        </div>}
         </div>
       </div>
     </div>

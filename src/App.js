@@ -1,28 +1,29 @@
-import logo from './logo.svg'
-import React,{useState,useEffect} from "react"
-import './App.css';
-import { Provider } from 'react-redux';
-import configureStore from "./components/Redux/store"
-import { AppRouter } from './components/Router/router';
-import AxiosInstance from './components/axios/axiosInstance';
-import { suggestionset } from './components/Redux/action';
+import logo from "./logo.svg";
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import { Provider } from "react-redux";
+import configureStore from "./components/Redux/store";
+import { AppRouter } from "./components/Router/router";
+import AxiosInstance from "./components/axios/axiosInstance";
+import { suggestionset,wishlistset } from "./components/Redux/action";
 
-export const store=configureStore()
+export const store = configureStore();
 
 function App() {
-  useEffect(()=>{
-   AxiosInstance.get("/suggestions")
-   .then((res)=>{
-     console.log(res.data)
-     store.dispatch(suggestionset(res.data))
-   })
-  },[])
+
+  useEffect(() => {
+    AxiosInstance.post("/suggestions").then((res) => {
+      console.log(res.data);
+      store.dispatch(suggestionset(res.data.suggestions));
+      store.dispatch(wishlistset(res.data.wishlistnames));
+    });
+  }, []);
   return (
     <div>
-       <Provider store={store}>
-          <AppRouter/>
-       </Provider>
+      <Provider store={store}>
+        <AppRouter />
+      </Provider>
     </div>
   );
 }
-export default App
+export default App;

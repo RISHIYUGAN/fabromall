@@ -104,17 +104,40 @@ const Products = (props) => {
   const [sortvalue, setSortvalue] = useState([
     { value: "Ascending", label: "Ascending" },
   ]);
-  const [sortCheck,setSortCheck]=useState({
-    type:"",
-    sorttype:"Ascending"
-  })
+  const [sortCheck, setSortCheck] = useState({
+    type: "",
+    sorttype: "Ascending",
+  });
   const [suggestvalue, setSuggestvalue] = useState("");
   const [searchsuggest, setSearchSuggest] = useState([]);
   const [sorttype, setSorttype] = useState();
   const [filtervaluecopy, setFiltervaluecopy] = useState({});
-  const [filtering,setfiltering]=useState(false)
-  const [disableSort,setDisableSort]=useState(true)
-  const [pageLoad,setPageLoad]=useState(true)
+  const [filtering, setfiltering] = useState(false);
+  const [disableSort, setDisableSort] = useState(true);
+  const [pageLoad, setPageLoad] = useState(true);
+
+  // useEffect(()=>{
+  //   const minim=()=>{
+  //     return new Promise((resolve)=>{
+  //       var count=0
+  //      const recur=(rec)=>{
+  //        window.scrollTo(0,800)
+  //       console.log("entering",rec)
+  //        if(rec===1){
+  //          resolve(rec)
+  //          return 0;
+  //        }
+  //        else{
+  //          recur(rec-1)
+  //        }
+  //      }
+  //      recur(50);
+  //     })
+  //   }
+  //   minim().then((res)=>{
+  //    console.log("res",res)
+  //   })
+  //  },[])
 
   useEffect(() => {
     window.addEventListener("scroll", handlescroll);
@@ -129,22 +152,23 @@ const Products = (props) => {
             typevalue: "Bedsheet",
           },
         ];
-        setPageLoad(true)
-    AxiosInstance.post("/fetch_product", request).then((res) => {
-      console.log(res.data);
-      setProductslist(res.data.current.products);
-      setTotPages(res.data.totalpages);
-      setCurrentPage(res.data.current.currentpage);
-      setPages({
-        prepage: res.data.totalpages >= 1 && 1,
-        centpage: res.data.totalpages >= 2 && 2,
-        postpage: res.data.totalpages >= 3 && 3,
+    setPageLoad(true);
+    AxiosInstance.post("/fetch_product", request)
+      .then((res) => {
+        console.log(res.data);
+        setProductslist(res.data.current.products);
+        setTotPages(res.data.totalpages);
+        setCurrentPage(res.data.current.currentpage);
+        setPages({
+          prepage: res.data.totalpages >= 1 && 1,
+          centpage: res.data.totalpages >= 2 && 2,
+          postpage: res.data.totalpages >= 3 && 3,
+        });
+        setPageLoad(false);
+      })
+      .catch(() => {
+        setPageLoad(false);
       });
-      setPageLoad(false)
-    })
-    .catch(()=>{
-      setPageLoad(false)
-    })
     // console.log(history.location);
     return () => {
       window.removeEventListener("scroll", handlescroll);
@@ -217,27 +241,30 @@ const Products = (props) => {
   };
   const searchprd = (e) => {
     e.preventDefault();
-    setPageLoad(true)
+    setPageLoad(true);
     e.target.search.blur();
     if (searchfilter.length !== 0) {
       console.log("entering");
-      AxiosInstance.post("/fetch_product", searchfilter).then((res) => {
-        console.log(res.data);
-        var json = JSON.stringify(searchfilter);
-        localStorage.setItem("prdcts", json);
-        setProductslist(res.data.current.products);
-        setTotPages(res.data.totalpages);
-        setCurrentPage(res.data.current.currentpage);
-        setPages({
-          prepage: res.data.totalpages >= 1 && 1,
-          centpage: res.data.totalpages >= 2 && 2,
-          postpage: res.data.totalpages >= 3 && 3,
+      AxiosInstance.post("/fetch_product", searchfilter)
+        .then((res) => {
+          console.log(res.data);
+          setFilterState({});
+          setFiltervalues({});
+          var json = JSON.stringify(searchfilter);
+          localStorage.setItem("prdcts", json);
+          setProductslist(res.data.current.products);
+          setTotPages(res.data.totalpages);
+          setCurrentPage(res.data.current.currentpage);
+          setPages({
+            prepage: res.data.totalpages >= 1 && 1,
+            centpage: res.data.totalpages >= 2 && 2,
+            postpage: res.data.totalpages >= 3 && 3,
+          });
+          setPageLoad(false);
+        })
+        .catch(() => {
+          setPageLoad(false);
         });
-        setPageLoad(false)
-      })
-      .catch(()=>{
-        setPageLoad(false)
-      })
     }
   };
   const pageset = (number) => {
@@ -251,13 +278,13 @@ const Products = (props) => {
       });
     }
     if (number >= 1 && number <= totpages) {
-      setTimeout(()=>{
-        setPageLoad(true)
-      },500)
-      
+      setTimeout(() => {
+        setPageLoad(true);
+      }, 500);
+
       window.scroll({
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
       setCurrentPage(number);
       // console.log("pageif2");
@@ -270,22 +297,23 @@ const Products = (props) => {
           AxiosInstance.post("/pagination", {
             skip: skip,
             limit: 12,
-          }).then((res) => {
-            console.log(res.data.current.products);
-            setProductslist(res.data.current.products);
-            setCurrentPage(number);
-            if (number > 1 && number < totpages) {
-              setPages({
-                prepage: number - 1,
-                centpage: number,
-                postpage: number + 1,
-              });
-            }
-            setPageLoad(false)
           })
-          .catch(()=>{
-            setPageLoad(false)
-          })
+            .then((res) => {
+              console.log(res.data.current.products);
+              setProductslist(res.data.current.products);
+              setCurrentPage(number);
+              if (number > 1 && number < totpages) {
+                setPages({
+                  prepage: number - 1,
+                  centpage: number,
+                  postpage: number + 1,
+                });
+              }
+              setPageLoad(false);
+            })
+            .catch(() => {
+              setPageLoad(false);
+            });
         }
       }, 1000);
     }
@@ -293,13 +321,15 @@ const Products = (props) => {
   const filtersort = (e) => {
     e.preventDefault();
     var check2 = true;
-    var type=e.target.sorting.value
-    var sorttype=(type!==""?e.target.sorttype.value:null)
+    var type = e.target.sorting.value;
+    var sorttype = type !== "" ? e.target.sorttype.value : null;
     // console.log(Object.keys(filtervaluecopy).length,Object.keys(filtervalues).length)
-    if(Object.keys(filtervaluecopy).length!==0&&Object.keys(filtervalues).length===0){
-      check2=false
-    }
-    else{
+    if (
+      Object.keys(filtervaluecopy).length !== 0 &&
+      Object.keys(filtervalues).length === 0
+    ) {
+      check2 = false;
+    } else {
       Object.keys(filtervalues).forEach((element, index) => {
         var check = filtervalues[element] === filtervaluecopy[element];
         check2 = check2 && check;
@@ -312,41 +342,48 @@ const Products = (props) => {
     //  "...",!!check2===true,!!sortCheck.type==type,!!type!==""?(sortCheck.sorttype===sorttype):true,
     //   "pump",!(check2===true&&!!(sortCheck.type===type)&&!!(type!==""?(sortCheck.sorttype===sorttype):true))
     //   )
-    if(!(check2===true&&!!(sortCheck.type===type)&&!!(type!==""?(sortCheck.sorttype===sorttype):true))){
-    // console.log(check2);
-    // console.log("entering filter");
-    setPageLoad(true)
-    AxiosInstance.post("/filter-sort", {
-      filter: !check2,
-      ...filtervalues,
-      type:type!==""?type.toLowerCase():null,
-      sorttype:type!==""?sorttype.toLowerCase():null,
-    }).then((res) => {
-      console.log(res.data);
-      setProductslist(res.data.current.products);
-      setTotPages(res.data.totalpages);
-      setCurrentPage(res.data.current.currentpage);
-      setPages({
-        prepage: res.data.totalpages >= 1 && 1,
-        centpage: res.data.totalpages >= 2 && 2,
-        postpage: res.data.totalpages >= 3 && 3,
-      });
-      setFiltervaluecopy(filtervalues);
-      setSortCheck({
-        type:type,
-        sorttype:sorttype
+    if (
+      !(
+        check2 === true &&
+        !!(sortCheck.type === type) &&
+        !!(type !== "" ? sortCheck.sorttype === sorttype : true)
+      )
+    ) {
+      // console.log(check2);
+      // console.log("entering filter");
+      setPageLoad(true);
+      AxiosInstance.post("/filter-sort", {
+        filter: !check2,
+        ...filtervalues,
+        type: type !== "" ? type.toLowerCase() : null,
+        sorttype: type !== "" ? sorttype.toLowerCase() : null,
       })
-      setPageLoad(false)
-    })
-    .catch(()=>{
-      setPageLoad(false)
-    })
-  }
+        .then((res) => {
+          console.log(res.data);
+          setProductslist(res.data.current.products);
+          setTotPages(res.data.totalpages);
+          setCurrentPage(res.data.current.currentpage);
+          setPages({
+            prepage: res.data.totalpages >= 1 && 1,
+            centpage: res.data.totalpages >= 2 && 2,
+            postpage: res.data.totalpages >= 3 && 3,
+          });
+          setFiltervaluecopy(filtervalues);
+          setSortCheck({
+            type: type,
+            sorttype: sorttype,
+          });
+          setPageLoad(false);
+        })
+        .catch(() => {
+          setPageLoad(false);
+        });
+    }
   };
 
   return (
     <div className="products-container">
-      {console.log("filtervalues---",filtervalues)}
+      {console.log("filtervalues---", filtervalues)}
       <div id="suggestion" className="suggestions-div">
         <div className="container">
           <div className="suggestions-wrapper">
@@ -450,18 +487,18 @@ const Products = (props) => {
                     {/* {console.log("filt-val", filtervalues)} */}
                   </div>
                   <div className="sort-btn-div">
-                  <button
-                  onClick={() => {
-                    setFilterState({});
-                    setFiltervalues({})
-                  }}
-                  className="reset-filt-div"
-                >
-                  Reset filter
-                </button>
+                    <button
+                      onClick={() => {
+                        setFilterState({});
+                        setFiltervalues({});
+                      }}
+                      className="reset-filt-div"
+                    >
+                      Reset filter
+                    </button>
+                  </div>
                 </div>
-                </div>
-                
+
                 <div className="sort-div" style={{ marginTop: "35px" }}>
                   <div className="sort-title">
                     <div>
@@ -473,15 +510,14 @@ const Products = (props) => {
                     {sorts.map((sort) => (
                       <div className="check-div">
                         <label for={sort}>
-                         
                           <input
                             type="radio"
                             id={sort}
                             name="sorting"
                             value={sort}
-                            onChange={(e)=>{
-                              if(disableSort===true){
-                                setDisableSort(false)
+                            onChange={(e) => {
+                              if (disableSort === true) {
+                                setDisableSort(false);
                               }
                             }}
                           />
@@ -507,64 +543,66 @@ const Products = (props) => {
                     </div>
                   </div>
                   <div className="sort-btn-div">
-                  <button
-                onClick={() => {
-                  document.getElementsByName("sorting").forEach((el)=>{
-                    el.checked=false
-                  })
-                  setDisableSort(true)
-                  setSortvalue([{ value: "Ascending", label: "Ascending" }]);
-                }}
-                className="reset-filt-div"
-              >
-                Reset Sort
-              </button>
+                    <button
+                      onClick={() => {
+                        document.getElementsByName("sorting").forEach((el) => {
+                          el.checked = false;
+                        });
+                        setDisableSort(true);
+                        setSortvalue([
+                          { value: "Ascending", label: "Ascending" },
+                        ]);
+                      }}
+                      className="reset-filt-div"
+                    >
+                      Reset Sort
+                    </button>
                   </div>
                 </div>
                 <div className="apply-btn-div">
-                    <button className="filter-btn">Apply</button>
-                  </div>
-              </form>
-              
-            </div>
-            {pageLoad?
-              <div className="page-loading">
- <i class="fas fa-circle-notch fa-spin"></i>
-              </div>
-              :
-            <div className="pds-list">
-              {productslist.map((product) => (
-                <div className="each-prdct">
-                  <div className="prdct-img-div">
-                    <img src={product.img} className="prd-img" />
-                  </div>
-                  <div className="prdct-des">
-                    <div className="prdct-name">{product.name}</div>
-                    <div className="rating-div">
-                      <div className="rate">
-                        {marked(product.rating).map((star) => star)}
-                        <div className="rating-num">{product.rating}.0</div>
-                      </div>
-                      <div className="sold-rate">(350)</div>
-                    </div>
-                    <div className="price-div">
-                      <div className="ogn-price">
-                        <i class="fas fa-rupee-sign"></i> {product.price}.00
-                        <div className="strike"></div>
-                      </div>
-                      <div className="offer">{product.offer}% off</div>
-                      <div className="dscnt-offer">
-                        <i class="fas fa-rupee-sign"></i>{" "}
-                        {Math.round(product.price * (1 - product.offer / 100))}
-                        .00
-                      </div>
-                    </div>
-                  </div>
+                  <button className="filter-btn">Apply</button>
                 </div>
-              ))}
-              
+              </form>
             </div>
-             } 
+            {pageLoad ? (
+              <div className="page-loading">
+                <i class="fas fa-circle-notch fa-spin"></i>
+              </div>
+            ) : (
+              <div className="pds-list">
+                {productslist.map((product) => (
+                  <div className="each-prdct">
+                    <div className="prdct-img-div">
+                      <img src={product.img} className="prd-img" />
+                    </div>
+                    <div className="prdct-des">
+                      <div className="prdct-name">{product.name}</div>
+                      <div className="rating-div">
+                        <div className="rate">
+                          {marked(product.rating).map((star) => star)}
+                          <div className="rating-num">{product.rating}.0</div>
+                        </div>
+                        <div className="sold-rate">(350)</div>
+                      </div>
+                      <div className="price-div">
+                        <div className="ogn-price">
+                          <i class="fas fa-rupee-sign"></i> {product.price}.00
+                          <div className="strike"></div>
+                        </div>
+                        <div className="offer">{product.offer}% off</div>
+                        <div className="dscnt-offer">
+                          <i class="fas fa-rupee-sign"></i>{" "}
+                          {Math.round(
+                            product.price * (1 - product.offer / 100)
+                          )}
+                          .00
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div className="pagination">
             <div className="page-show">
@@ -617,6 +655,7 @@ const Products = (props) => {
                   pageset(currentPage + 1);
                 }}
                 className="pre-next post-page"
+                id="check"
               >
                 Next Page&nbsp;&nbsp;<i class="fas fa-angle-right"></i>
               </div>

@@ -1,0 +1,190 @@
+.pop-up-container {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pop-up-ref{
+  position:absolute;
+  top:0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background: rgba( 255, 255, 255, 0.25 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 4px );
+-webkit-backdrop-filter: blur( 4px );
+z-index:6;
+}
+.wishlist-pop-up-content{
+  z-index: 7;
+  position: relative;
+  /* border: 1px solid red; */
+}
+.pop-up-wrapper {
+  width: 500px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  z-index: 7;
+  padding-bottom:20px;
+}
+.popup-title {
+  background-color: rgb(66, 66, 66);
+  /* background-color: transparent; */
+  color: white;
+  padding: 10px 0px;
+  text-align: center;
+  font-family: poppins-500;
+  font-size: 18px;
+  position: relative;
+  /* margin:10px 10px 0px 10px; */
+  /* border:5px double rgb(41, 123, 255); */
+}
+.wishlist-names-wrapper {
+  background-color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  padding: 10px 10px 10px 10px;
+  max-height: 250px;
+  overflow-y:auto;
+  cursor: pointer;
+}
+.empty-wish-names{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100%;
+  grid-column:1/3;
+  height: 150px;
+  font-family: poppins-500;
+  /* border: 1px solid red; */
+}
+.wishlist-names-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+.wishlist-names-wrapper::-webkit-scrollbar-track {
+  width: 8px;
+  background-color: transparent;
+}
+.wishlist-names-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgb(182, 182, 182);
+  border-radius: 5px;
+}
+.wishlist-popup-name {
+  vertical-align: middle;
+  padding: 20px 15px 20px 15px;
+  font-family: poppins-500;
+  max-width: 100%;
+  height:fit-content;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgb(255, 254, 254);
+}
+.light{
+background-color: #b0d0ff;
+}
+.dark{
+    background-color: #8dbbff;
+}
+.wishlist-popup-name:hover{
+    transform: scale(1.02);
+    color: white;
+}
+.wishlist-popup-name i {
+  color: rgba(255, 87, 87, 1);
+  margin-right: 5px;
+}
+.wishpop-cnt{
+  /* border: 1px solid red; */
+}
+.wishpop-btn-div{
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 10px 10px!important;
+}
+.wishpop-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  outline: none;
+  margin-top: 0px;
+  border-radius: 5px;
+  background-color: #ff6f6f;
+  /* background-color: rgb(110, 228, 110); */
+  color: white;
+  font-family: poppins-500;
+  font-size: 16px;
+  cursor: pointer;
+  
+}
+.wishpop-input-div{
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding:10px 10px 10px 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  
+}
+.wishpop-input{
+  max-width:100%;
+  height: 30px;
+  outline: none;
+  flex-grow: 1;
+  margin-left:5px;
+  font-family: poppins-reg;
+  font-size: 16px;
+  border: 1.5px solid rgb(189, 189, 189);
+  border-radius:5px;
+  padding:0px 10px;
+}
+.wishpop-input:-webkit-autofill{
+  color:black!important;
+  fill:black!important;
+  -webkit-text-fill-color: black !important;
+}
+.wishpop-input:-webkit-autofill:hover{
+  color:black!important;
+  fill:black!important;
+  -webkit-text-fill-color: black !important;
+}
+.wishpop-input:-webkit-autofill:focus{
+  color:black!important;
+  fill:black!important;
+  -webkit-text-fill-color: black !important;
+}
+.wishpop-input-div>label{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #8dbbff;
+  font-family: poppins-500;
+}
+.name-exist-error{
+  background-color: #fab443;
+  width:0%;
+  color: white;
+  position:absolute;
+  top:-45px;
+  left: 0px;
+  text-align: center;
+  border-radius:5px;
+  margin-left: 50%;
+  transform: translate(-50%);
+  padding:5px 0px;
+  transition: width 0.5s;
+  overflow: hidden;
+  white-space: nowrap;
+}

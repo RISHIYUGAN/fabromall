@@ -2,37 +2,65 @@ import React, { useState } from "react";
 import "./header.css";
 import { Sidebar } from "./sidebar/sidebar";
 import { NavLink } from "react-router-dom";
+import profile from "../../Assets/images/header/user.jpg"
 export const Header = () => {
   const [navigation, setNavigation] = useState([
     {
       name: "Home",
       to: "home",
-      icon:<i style={{fontSize: "22px",color:"#636363",marginTop:"-3px"}} class="fas fa-home"/>
+      icon: (
+        <i
+          style={{ fontSize: "22px", color: "#636363", marginTop: "-3px" }}
+          class="fas fa-home"
+        />
+      ),
     },
     {
       name: "My Cart",
       to: "my_cart",
-      icon:<i style={{fontSize: "22px",color:"#636363"}} class="fas fa-shopping-cart"/>
+      icon: (
+        <i
+          style={{ fontSize: "22px", color: "#636363" }}
+          class="fas fa-shopping-cart"
+        />
+      ),
     },
     {
       name: "My WishList",
       to: "my_wishlist",
-      icon:<i style={{fontSize: "22px",color:"#636363"}} class="fas fa-heart"/>
+      icon: (
+        <i
+          style={{ fontSize: "22px", color: "#636363" }}
+          class="fas fa-heart"
+        />
+      ),
     },
     {
       name: "My Orders",
       to: "my_orders",
-      icon:<i style={{fontSize: "22px",color:"#636363"}} class="fas fa-box-open"/>
+      icon: (
+        <i
+          style={{ fontSize: "22px", color: "#636363" }}
+          class="fas fa-box-open"
+        />
+      ),
     },
     {
       name: "My Account",
       to: "my_account",
-      icon:<i style={{fontSize: "25px",color:"#636363"}} class="fas fa-user-circle"/>
+      icon: (
+        <i
+          style={{ fontSize: "25px", color: "#636363" }}
+          class="fas fa-user-circle"
+        />
+      ),
     },
     {
       name: "Notifications",
       to: "notifications",
-      icon:<i style={{fontSize: "22px",color:"#636363"}} class="fas fa-bell"/>
+      icon: (
+        <i style={{ fontSize: "22px", color: "#636363" }} class="fas fa-bell" />
+      ),
     },
   ]);
   const [sidebar, setSidebar] = useState(false);
@@ -40,10 +68,11 @@ export const Header = () => {
     <div className="header-container">
       <div className="container">
         <div className="header-content">
-          <div onClick={()=>{
-            setSidebar(true)
-          }}
-          style={{cursor:"pointer"}}
+          <div
+            onClick={() => {
+              setSidebar(true);
+            }}
+            style={{ cursor: "pointer" }}
           >
             <Sidebar />
           </div>
@@ -58,33 +87,31 @@ export const Header = () => {
       {sidebar && (
         <div className="sidebar-container">
           <div className="sidebar-wrapper">
-          <h4
+            <h4
               className="ExitButton"
               onClick={() => {
-              setSidebar(false)
+                setSidebar(false);
               }}
             >
               x
             </h4>
             <div className="profile-pic-div">
-            <div className="profile-pic"></div>
-            <div>Tony Stark H</div>
+              <div className="profile-pic" style={{backgroundImage:`url("${profile}")`}}></div>
+              <div>Tony Stark H</div>
             </div>
             <div className="navigations-div">
-                {
-                navigation.map((nav)=>(
-                  <NavLink to={nav.to} className="nav-link" activeClassName="active-nav">
-                    <div className="each-nav">
-                      <div className="hdr-icon-div">
-                      {nav.icon}
-                      </div>
-                      <div className="nav-name">
-                      {nav.name}
-                     </div>
-                    </div>
-                     </NavLink>
-                ))
-                }
+              {navigation.map((nav) => (
+                <NavLink
+                  to={nav.to}
+                  className="nav-link"
+                  activeClassName="active-nav"
+                >
+                  <div className="each-nav">
+                    <div className="hdr-icon-div">{nav.icon}</div>
+                    <div className="nav-name">{nav.name}</div>
+                  </div>
+                </NavLink>
+              ))}
             </div>
           </div>
         </div>

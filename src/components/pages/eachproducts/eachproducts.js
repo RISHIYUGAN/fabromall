@@ -2,6 +2,8 @@ import React, { Fragment, useState } from "react";
 import "./eachproducts.css";
 import stock from "../../../Assets/images/products/check-triangle.png";
 import Select from "react-select";
+import AxiosInstance from "../../axios/axiosInstance";
+import { Loader } from "../../utility/loader/loader";
 
 export const EachProducts = () => {
   const [eachprdct, setEachprdct] = useState({
@@ -24,7 +26,7 @@ export const EachProducts = () => {
         name: "parthi vijay151",
         profile: "",
         likes: 5,
-        liked:false,
+        liked: false,
         rating: 3,
         review:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
@@ -33,7 +35,7 @@ export const EachProducts = () => {
         name: "Sam Billy",
         profile: "",
         likes: 2,
-        liked:false,
+        liked: false,
         rating: 3,
         review:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
@@ -42,13 +44,16 @@ export const EachProducts = () => {
         name: "Rishi 2001",
         profile: "",
         likes: 4,
-        liked:true,
+        liked: true,
         rating: 3,
         review:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim sem amet curabitur tortor donec. Convallis est ut fusce id cursus. Sodales eget amet, molestie",
       },
-    ]
+    ],
   });
+  const [adding, setAdding] = useState(false);
+  const [addload, setAddload] = useState(false);
+
   const marked = (rate) => {
     var rating = [];
     for (rate; rate !== 0; rate--)
@@ -87,22 +92,34 @@ export const EachProducts = () => {
       const fontFamily = "poppins-500";
       const color = "#0C0C0C";
 
-      return { ...provided, opacity, transition, fontFamily, color};
+      return { ...provided, opacity, transition, fontFamily, color };
     },
   };
-  const myrate=[
-    {value:1,label:1},
-    {value:2,label:2},
-    {value:3,label:3},
-    {value:4,label:4},
-    {value:5,label:5},
-  ]
-// var str='QA101'
-// var mat=str.match(/\d{3,}/)
-// console.log(mat)
-// if(str.match(/\d{3,4}$/)){
-//   console.log("mat",mat)
-// }
+  const myrate = [
+    { value: 1, label: 1 },
+    { value: 2, label: 2 },
+    { value: 3, label: 3 },
+    { value: 4, label: 4 },
+    { value: 5, label: 5 },
+  ];
+
+  const addtocart = () => {
+    if (adding === false) {
+      setAdding(true);
+      setAddload(true);
+      AxiosInstance.post("/addto-cart", {product:{...eachprdct,qty:1}})
+        .then((res) => {
+          console.log(res.data);
+          setEachprdct({...eachprdct,cart:true})
+          setAdding(false);
+          setAddload(false);
+        })
+        .catch(() => {
+          setAdding(false);
+          setAddload(false);
+        });
+    }
+  };
   return (
     <div className="each-prd-container">
       <div className="container">
@@ -203,9 +220,24 @@ export const EachProducts = () => {
                 )}
               </div>
               <div className="ep-btn-div">
-                <button>
-                  <i class="fas fa-shopping-cart"></i>&nbsp;&nbsp;Add to Cart
-                </button>
+                {eachprdct.cart ? (
+                  <button>
+                    <i class="fas fa-shopping-cart"></i>&nbsp;&nbsp;Added to
+                    Cart
+                  </button>
+                ) : (
+                  <button onClick={(e) => addtocart()} style={{cursor:"pointer"}}>
+                    {addload ? (
+                      <Loader color="white" />
+                    ) : (
+                      <Fragment>
+                        <i class="fas fa-shopping-cart"></i>&nbsp;&nbsp;Add to
+                        Cart
+                      </Fragment>
+                    )}
+                  </button>
+                )}
+
                 <button>
                   <i class="fas fa-box-open"></i>&nbsp;&nbsp;Place Order
                 </button>
@@ -213,21 +245,25 @@ export const EachProducts = () => {
             </div>
           </div>
           <div className="add-review">
-             <div className="add-rev-title">Add Your Review</div>
-             <form>
-             <div className="review-form">
-               <label>Enter your review :</label>
+            <div className="add-rev-title">Add Your Review</div>
+            <form>
+              <div className="review-form">
+                <label>Enter your review :</label>
                 <textarea className="txt-area"></textarea>
-                <div className="my-rev-rat"> 
-                <label>Enter your rating :</label>
-                <div style={{height:"5px"}}></div>
-                <Select styles={customStyles} options={myrate} placeholder="Product Rating"></Select>
+                <div className="my-rev-rat">
+                  <label>Enter your rating :</label>
+                  <div style={{ height: "5px" }}></div>
+                  <Select
+                    styles={customStyles}
+                    options={myrate}
+                    placeholder="Product Rating"
+                  ></Select>
                 </div>
                 <div className="rev-btn-div">
-                <button className="rev-btn">Add</button>
+                  <button className="rev-btn">Add</button>
                 </div>
-             </div>
-             </form>
+              </div>
+            </form>
           </div>
         </div>
         <div className="ep-line"></div>
@@ -249,13 +285,18 @@ export const EachProducts = () => {
                 <div className="rev-prf-div">
                   <div className="rev-prf">
                     <div className="user-prf-pic"></div>
-                    <div style={{marginLeft:"5px"}}>{rev.name}</div>
+                    <div style={{ marginLeft: "5px" }}>{rev.name}</div>
                   </div>
-                  <div className="rev-likes">{rev.liked?<i class="fas fa-heart"></i>:<i class="far fa-heart"></i>}{rev.likes}</div>
+                  <div className="rev-likes">
+                    {rev.liked ? (
+                      <i class="fas fa-heart"></i>
+                    ) : (
+                      <i class="far fa-heart"></i>
+                    )}
+                    {rev.likes}
+                  </div>
                 </div>
-                <div className="rev-message">
-                    {rev.review}
-                </div>
+                <div className="rev-message">{rev.review}</div>
                 <div className="my-rating">
                   My Rating: {marked(rev.rating).map((star) => star)}
                 </div>
