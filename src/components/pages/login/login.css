@@ -46,6 +46,7 @@
   border-radius: 10px;
   padding:10px 20px;
   position: relative;
+  /* border:1px solid red */
 }
 .sidebox{
   flex-grow: 1;
@@ -100,8 +101,10 @@
     color:white;
     text-align: center;
 }
-form{
+.Login form{
   margin-top: 20px;
+  width:350px;
+  /* border: 1px solid red; */
 }
 .division_1{
     width:100%;
@@ -177,11 +180,60 @@ input[type=number] {
     margin:auto;
     height: 30px;
     border-bottom:2px solid white;
-    transition:border-bottom 1s;
+    /* transition:border-bottom 1s; */
     display: flex;
-    
   }
-  
+  #addresspin{
+     max-width:350px;
+     display: grid;
+     grid-template-columns:calc(70% - 15px) calc(30% - 5px);
+     grid-column-gap:20px;
+     border: none;
+     color: white;
+  }
+  .addressline{
+    border-bottom:2px solid white;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    margin:auto;
+    /* margin-right:10px; */
+    /* border: 1px solid green; */
+  }
+  .state-icon{
+    width:20px;
+    text-align: end;
+    margin-right:5px;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+   vertical-align: bottom;
+   /* border: 1px solid red; */
+  }
+ .addressline input,.pin input{
+   /* border: 1px solid red; */
+   width:calc(100% - 20px)!important;
+   max-width:calc(100% - 20px)!important;
+   flex-grow: 1;
+   box-sizing: border-box;
+ }
+  .pin{
+    border-bottom:2px solid white;
+    display: flex;
+    align-items: center;  
+    height: 30px;
+    margin:auto;
+    /* margin-left:10px; */
+    /* border: 1px solid green; */
+  }
+  #addresspin i{
+    width:20px;
+    text-align: end;
+    margin-right:5px;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+   vertical-align:middle;
+
+  }
   .con-input{
     outline:none;
     border:none ;
@@ -201,7 +253,6 @@ input[type=number] {
     -webkit-tap-highlight-color: none; 
     font-family: poppins-500; 
     font-size: 16px;
-    width:300px;
     flex-grow: 1;
 }
 input:-webkit-autofill,
@@ -244,9 +295,21 @@ input:focus{
     top: 5px;
     right:10px;
     padding:0px 7px 4px 7px;
-    border-radius: 50%;
     color: white;
     font-size: 25px;
+  }
+  #prevexit{
+    display: flex;
+    right: 0px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    padding:0px 30px 0px 30px;
+    cursor: auto;
+  }
+  #prevexit>div{
+    cursor: pointer;
   }
  .new-user{
    display: flex;
@@ -257,7 +320,79 @@ input:focus{
    margin-top: 20px;
    color:rgb(246, 246, 246)
  }
-
+ #countrydiv{
+   position: relative;
+ }
+ #countrydiv:focus-within .countrylist{
+   visibility:visible;
+ }
+ .countrylist{
+   height:150px;
+   position:absolute;
+   top: 120%;
+   width:100%;
+   overflow: auto;
+   background-color:white;
+   font-size: 14px;
+   overflow-x: hidden;
+   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.808);
+   visibility:hidden;
+   display: flex;
+   flex-direction: column;
+ }
+ .countrylist::-webkit-scrollbar{
+   width:5px; 
+ }
+ .countrylist::-webkit-scrollbar-track{
+   width:5px;
+   border-color: transparent;
+ }
+ .countrylist::-webkit-scrollbar-thumb{
+   background-color:rgb(165, 165, 165);
+   border-radius: 5px;
+ }
+ .each-country{
+   width:calc(100%);
+   max-width: calc(100% - 5px);
+   text-decoration: none;
+   padding:10px 5px;
+   cursor: pointer;
+ }
+ .find-div{
+  margin-top:5px;
+  max-width:calc(100% - 1px);
+  display: grid;
+  grid-template-columns:1fr;
+  grid-column-gap:2px;
+  box-sizing: border-box;
+  height: 25px;
+ }
+ .find-btn{
+   width:20px;
+   height:20px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color:#2965FE;
+   color: white;
+ }
+ .find{
+   width:calc(100% - 2px);
+   outline:none;
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+   padding: 0px 2px;
+   box-sizing: border-box;
+   margin-left:2px;
+   outline: none;
+   border: 1px solid #2965FE;
+   border-radius: 5px;
+ }
+ .each-country:hover{
+  background-color: #8dbbff;
+  color: white;
+ }
   .Register{
     color:orange;
     font-family: poppins-300;
@@ -405,4 +540,8 @@ input:focus{
     width:1050px;
     height:550px;
   }
+}
+.prev-div{
+  margin-top:5px;
+  font-size: 20px;
 }

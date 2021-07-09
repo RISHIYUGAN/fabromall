@@ -135,7 +135,7 @@ const WishList = (props) => {
         .then((res) => {
           console.log(res.data);
           if (document.getElementById(name))
-            document.getElementById(name).style.display = "none";
+          document.getElementById(name).style.display = "none";
           setEachWish(res.data.wishlists);
           props.wishlistset(res.data.wishlistnames);
           setEditing(false);

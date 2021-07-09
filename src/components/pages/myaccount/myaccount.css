@@ -21,6 +21,11 @@
     border-radius: 50%;
     background-position: center;
     background-size: cover;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* box-sizing: border-box; */
 }
 .acc-name-div{
     margin-left:15px;
@@ -66,4 +71,42 @@
     -ms-hyphens: auto;
    display: flex;
    justify-content: flex-end;
+}
+.logout{
+    margin-top:25px;
+    background-color:#3C72FF;
+    border: none;
+    color: white;
+    padding:10px 20px;
+    font-family: poppins-semib;
+    border-radius: 5px;
+    font-size: 15px;
+}
+@keyframes blink{
+    0%{background-color: rgba(197, 197, 197, 0.200);}
+    /* 25%{background-color: rgba(197, 197, 197, 0.500);}
+    /* 50%{background-color: rgba(197, 197, 197, 0.800);} */
+    50%{background-color: rgba(197, 197, 197, 0.800);}
+    100%{background-color: rgba(197, 197, 197, 0.200);}
+}
+.progress{
+    animation-name: blink;
+    animation-duration:2s;
+    animation-iteration-count: infinite;
+    color:red;
+    fill:red;
+    width: 100%!important;
+    height: 100%!important;
+    /* background-color: rgba(197, 197, 197, 0.808); */
+    border-radius: 50%;
+    border: 1px soldid red;
+    outline: none;
+}
+.progress-div{
+    width:100px!important;
+    height: 100%!important;
+}
+.file-upload{
+    position: fixed;
+    left:-200vw;
 }
