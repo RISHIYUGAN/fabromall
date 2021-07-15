@@ -113,7 +113,10 @@ const Home = (props) => {
                               }).then((res) => {
                                 var json = JSON.stringify(res);
                                 localStorage.setItem("prdcts", json);
+                                localStorage.setItem("currentpage","1");
+                                console.log(history)
                                 history.push("/products");
+                                window.scrollTo(0,0)
                               });
                             }}
                           >

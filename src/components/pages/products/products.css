@@ -5,9 +5,9 @@
 form{
     margin: 0px;
 }
-html{
+/* html{
     scroll-behavior: smooth;
-}
+} */
 .products-display-div{
     display: flex;
     margin-top: 35px;

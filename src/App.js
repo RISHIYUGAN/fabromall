@@ -10,14 +10,7 @@ import { suggestionset,wishlistset } from "./components/Redux/action";
 export const store = configureStore();
 
 function App() {
-
-  useEffect(() => {
-    AxiosInstance.post("/suggestions").then((res) => {
-      console.log(res.data);
-      store.dispatch(suggestionset(res.data.suggestions));
-      store.dispatch(wishlistset(res.data.wishlistnames));
-    });
-  }, []);
+  
   return (
     <div>
       <Provider store={store}>

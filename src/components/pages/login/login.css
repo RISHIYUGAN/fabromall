@@ -255,17 +255,17 @@ input[type=number] {
     font-size: 16px;
     flex-grow: 1;
 }
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+.Login-Container input:-webkit-autofill,
+.Login-Container input:-webkit-autofill:hover,
+.Login-Container input:-webkit-autofill:focus,
+.Login-Container input:-webkit-autofill:active {
   background-color: transparent;
     transition: background-color 5000s ease-in-out 0s;
     -webkit-text-fill-color: #fff !important;
     caret-color: white;
 }
 
-input:focus{
+.Login-Container input:focus{
   outline:none;
   background-color: transparent;
 }

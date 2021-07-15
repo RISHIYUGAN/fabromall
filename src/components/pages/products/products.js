@@ -6,6 +6,8 @@ import { history } from "../../Router/router";
 import AxiosInstance from "../../axios/axiosInstance";
 import { suggestionset } from "../../Redux/action";
 import { ProductSearch } from "../../utility/search/search";
+import { ProductsDisplay } from "./productsdisplay";
+import {Route} from "react-router-dom"
 
 const Products = (props) => {
   const [productslist, setProductslist] = useState([]);
@@ -116,60 +118,78 @@ const Products = (props) => {
   const [disableSort, setDisableSort] = useState(true);
   const [pageLoad, setPageLoad] = useState(true);
 
-  // useEffect(()=>{
-  //   const minim=()=>{
-  //     return new Promise((resolve)=>{
-  //       var count=0
-  //      const recur=(rec)=>{
-  //        window.scrollTo(0,800)
-  //       console.log("entering",rec)
-  //        if(rec===1){
-  //          resolve(rec)
-  //          return 0;
-  //        }
-  //        else{
-  //          recur(rec-1)
-  //        }
-  //      }
-  //      recur(50);
-  //     })
-  //   }
-  //   minim().then((res)=>{
-  //    console.log("res",res)
-  //   })
-  //  },[])
+  useEffect(()=>{
+
+    console.log(history)
+  },[])
 
   useEffect(() => {
     window.addEventListener("scroll", handlescroll);
-    const local = localStorage.getItem("prdcts");
-    var request = local
-      ? JSON.parse(local)
-      : [
-          {
-            categoryname: "Bedroom",
-            categoryvalue: "Bedroom",
-            typename: "Bedsheet",
-            typevalue: "Bedsheet",
-          },
-        ];
-    setPageLoad(true);
-    AxiosInstance.post("/fetch_product", request)
-      .then((res) => {
-        console.log(res.data);
-        setProductslist(res.data.current.products);
-        setTotPages(res.data.totalpages);
-        setCurrentPage(res.data.current.currentpage);
-        setPages({
-          prepage: res.data.totalpages >= 1 && 1,
-          centpage: res.data.totalpages >= 2 && 2,
-          postpage: res.data.totalpages >= 3 && 3,
+    console.log(localStorage.getItem("currentpage"))
+    if(localStorage.getItem("currentpage")=="1"){
+      const local = localStorage.getItem("prdcts");
+      var request = local
+        ? JSON.parse(local)
+        : [
+            {
+              categoryname: "Bedroom",
+              categoryvalue: "Bedroom",
+              typename: "Bedsheet",
+              typevalue: "Bedsheet",
+            },
+          ];
+      setPageLoad(true);
+      AxiosInstance.post("/fetch_product", request)
+        .then((res) => {
+          console.log(res.data);
+          setProductslist(res.data.current.products);
+          setTotPages(res.data.totalpages);
+          setCurrentPage(res.data.current.currentpage);
+          setPages({
+            prepage: res.data.totalpages >= 1 && 1,
+            centpage: res.data.totalpages >= 2 && 2,
+            postpage: res.data.totalpages >= 3 && 3,
+          });
+          setPageLoad(false);
+        })
+        .catch(() => {
+          setPageLoad(false);
         });
-        setPageLoad(false);
+    }
+    else{
+      var skip=(parseInt(localStorage.getItem("currentpage"))-1)*12
+      AxiosInstance.post("/pagination", {
+        skip: skip,
+        limit: 12,
       })
-      .catch(() => {
-        setPageLoad(false);
-      });
-    // console.log(history.location);
+        .then((res) => {
+          console.log(res.data);
+          var json=JSON.stringify(res.data.current.currentpage)
+          localStorage.setItem("currentpage",json)
+          setProductslist(res.data.current.products);
+          setCurrentPage(res.data.current.currentpage);
+          setTotPages(res.data.totalpages)
+          if (res.data.current.currentpage > 1 && res.data.current.currentpage < res.data.totalpages) {
+            // console.log("entering",parseInt(localStorage.getItem("currentpage")) - 1,parseInt(localStorage.getItem("currentpage")),parseInt(localStorage.getItem("currentpage")) + 1)
+            setPages({
+              prepage: res.data.current.currentpage - 1,
+              centpage:res.data.current.currentpage,
+              postpage: res.data.current.currentpage + 1,
+            });
+          }
+          else if(res.data.current.currentpage==res.data.totalpages){
+            setPages({
+              prepage: res.data.current.currentpage - 2,
+              centpage:res.data.current.currentpage - 1,
+              postpage: res.data.current.currentpage,
+            });
+          }
+          setPageLoad(false);
+        })
+        .catch(() => {
+          setPageLoad(false);
+        });
+    }
     return () => {
       window.removeEventListener("scroll", handlescroll);
     };
@@ -191,11 +211,13 @@ const Products = (props) => {
   }, [suggestvalue]);
 
   const handlescroll = () => {
-    if (window.pageYOffset === 0) {
-      document.getElementById("suggestion").style.boxShadow = "none";
-    } else {
-      document.getElementById("suggestion").style.boxShadow =
-        "0 0 10px rgba(0, 0, 0, 0.5)";
+    if(document.getElementById("suggestion")){
+      if (window.pageYOffset === 0) {
+        document.getElementById("suggestion").style.boxShadow = "none";
+      } else {
+        document.getElementById("suggestion").style.boxShadow =
+          "0 0 10px rgba(0, 0, 0, 0.5)";
+      }
     }
   };
   const customStyles = {
@@ -247,6 +269,8 @@ const Products = (props) => {
       console.log("entering");
       AxiosInstance.post("/fetch_product", searchfilter)
         .then((res) => {
+          const pagejson=JSON.stringify(res.data.current.currentpage)
+          localStorage.setItem("currentpage",pagejson)
           console.log(res.data);
           setFilterState({});
           setFiltervalues({});
@@ -268,9 +292,7 @@ const Products = (props) => {
     }
   };
   const pageset = (number) => {
-    // console.log("pageset");
     if (number > 1 && number < totpages) {
-      // console.log("pagesetif");
       setPages({
         prepage: number - 1,
         centpage: number,
@@ -287,7 +309,6 @@ const Products = (props) => {
         behavior: "smooth",
       });
       setCurrentPage(number);
-      // console.log("pageif2");
       setTimeout(() => {
         if (
           number === parseInt(document.getElementById("pg-highlight").innerHTML)
@@ -299,6 +320,8 @@ const Products = (props) => {
             limit: 12,
           })
             .then((res) => {
+              const json=JSON.stringify(number)
+              localStorage.setItem("currentpage",json)
               console.log(res.data.current.products);
               setProductslist(res.data.current.products);
               setCurrentPage(number);
@@ -381,6 +404,12 @@ const Products = (props) => {
     }
   };
 
+  const eachproduct=(prd)=>{
+    var json=JSON.stringify({category:prd.category,type:prd.type,model_number:prd.model_number})
+   localStorage.setItem('eachproduct',json)
+   window.scrollTo(0,0)
+   history.push("/eachproduct")
+  }
   return (
     <div className="products-container">
       {console.log("filtervalues---", filtervalues)}
@@ -569,39 +598,7 @@ const Products = (props) => {
                 <i class="fas fa-circle-notch fa-spin"></i>
               </div>
             ) : (
-              <div className="pds-list">
-                {productslist.map((product) => (
-                  <div className="each-prdct">
-                    <div className="prdct-img-div">
-                      <img src={product.img} className="prd-img" />
-                    </div>
-                    <div className="prdct-des">
-                      <div className="prdct-name">{product.name}</div>
-                      <div className="rating-div">
-                        <div className="rate">
-                          {marked(product.rating).map((star) => star)}
-                          <div className="rating-num">{product.rating}.0</div>
-                        </div>
-                        <div className="sold-rate">(350)</div>
-                      </div>
-                      <div className="price-div">
-                        <div className="ogn-price">
-                          <i class="fas fa-rupee-sign"></i> {product.price}.00
-                          <div className="strike"></div>
-                        </div>
-                        <div className="offer">{product.offer}% off</div>
-                        <div className="dscnt-offer">
-                          <i class="fas fa-rupee-sign"></i>{" "}
-                          {Math.round(
-                            product.price * (1 - product.offer / 100)
-                          )}
-                          .00
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <ProductsDisplay eachproduct={(product)=>eachproduct(product)} productslist={productslist} marked={(rating)=>marked(rating)}/>
             )}
           </div>
           <div className="pagination">

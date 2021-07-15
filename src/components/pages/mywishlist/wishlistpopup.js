@@ -25,9 +25,9 @@ const Wishlistpop = (props) => {
   var i = -1;
   var indec = 1;
 
- useEffect(()=>{
-  console.log(props.wishlist)
- },[])
+//  useEffect(()=>{
+//   document
+//  },[])
 
   useEffect(() => {
     setPropdet(props.popproduct);
@@ -55,6 +55,7 @@ const Wishlistpop = (props) => {
       });
       if(present===false){
         console.log("entering")
+        console.log(name,popdet)
         AxiosInstance.post("/create-wishlist", {
           name: name,
           product: [popdet],

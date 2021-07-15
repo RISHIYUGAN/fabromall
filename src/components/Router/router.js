@@ -1,3 +1,4 @@
+import React,{useEffect} from "react"
 import createBrowserHistory from "history/createBrowserHistory";
 import { Router, Switch, Route } from "react-router-dom";
 import PrivateRouter from "./privaterouter";
@@ -8,7 +9,8 @@ import Products from "../pages/products/products";
 import { EachProducts } from "../pages/eachproducts/eachproducts";
 import Cart from "../pages/mycart/cart";
 import WishList from "../pages/mywishlist/mywishlist";
-import MyAccount from "../pages/myaccount/myaccount"
+import MyAccount from "../pages/myaccount/myaccount";
+import OrderSummary from "../pages/order_summary/order_summary";
 
 export const history = createBrowserHistory();
 
@@ -21,6 +23,7 @@ export const AppRouter = () => {
           <PrivateRouter path="/home" component={Home} footer={true} />
           <PrivateRouter path="/products" component={Products} footer={true} />
           <PrivateRouter path="/eachproduct" component={EachProducts} footer={true}/>
+          <PrivateRouter path="/order_summary" component={OrderSummary} footer={false}/>
           <PrivateRouter path="/my_cart" component={Cart} footer={false} />
           <PrivateRouter path="/my_wishlist" component={WishList} footer={false}/>
           <PrivateRouter path="/my_account" component={MyAccount} footer={false}/>

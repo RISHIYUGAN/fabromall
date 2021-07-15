@@ -54,6 +54,7 @@ const Cart = () => {
       console.log(res.data);
       setAddload(false);
       setAdding(false)
+      setWishPop(false)
     })
     .catch(() => {
       setAddload(false);
