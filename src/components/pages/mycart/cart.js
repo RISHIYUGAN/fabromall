@@ -20,7 +20,7 @@ const Cart = () => {
    AxiosInstance.post("view-cart")
    .then((res)=>{
     setMycart(res.data)
-    setPageloading(false)
+    // setPageloading(false)
    })
   },[])
 
@@ -111,127 +111,133 @@ const Cart = () => {
             <sup className="cart-length">({mycart.length})</sup>
           </div>
         </div>
-        <div className="cart-list">
-         
-          {pageloading ? (
-            <Loader className="wish-loader" />
-          ) :mycart.length!==0?mycart.map((eacprd, index) => (
-            <div className="e-cart-prd">
-              <div className="e-cart-prd-des">
-                <div className="e-cart-name">{eacprd.name}</div>
-                <div className="e-cart-rating">
-                  <div>
-                    {marked(eacprd.rating)} {eacprd.rating}.0
-                  </div>
-                  <div className="stock-div" id="cart-stock-div">
-                    {/* {eacprd.stock ? (
-                      <div className="stock-in">
-                        <i id="cart-stock-icon" class="fas fa-check-circle"></i>
-                        Stock Available
-                      </div>
-                    ) : (
-                      <div className="stock-out">Out of Stock !</div>
-                    )} */}
-                    pack of&nbsp;&nbsp;{eacprd.description.package}
-                  </div>
-                </div>
-                <div className="e-cart-price-div">
-                  <div className="e-cart-ogn-price">
-                    <i class="fas fa-rupee-sign"></i>
-                    <h4>{eacprd.cartprice}.00</h4>
-                    <div className="strike"></div>
-                  </div>
-                  <div className="e-cart-offer">
-                    <h4>{eacprd.offer}% off</h4>
-                  </div>
-                  <div className="e-cart-dis">
-                    <i class="fas fa-rupee-sign"></i>
-                    <h4>
-                      {Math.round(eacprd.cartprice * (1 - eacprd.offer / 100))}
-                      .00
-                    </h4>
-                  </div>
-                </div>
-                <div className="qty-div">
-                  <div className="cart-add-wish">
-                    {eacprd.wishlist ? (
-                      <div className="cart-added-wish">
-                        <i class="fas fa-heart"></i>{" "}
-                        <text>Added to wishList</text>
-                      </div>
-                    ) : (
-                      <div
-                        className="cart-unadded-wish"
-                        onClick={() => {
-                          setPopproduct(eacprd);
-                          setWishPop(true);
-                        }}
-                      >
-                        <i class="far fa-heart"></i>{" "}
-                        <text>Add to wishList</text>
-                      </div>
-                    )}
-                  </div>
-                  <div className="qty-input-div">
-                    Qty:
-                    <input
-                      type="text"
-                      className="qty-input"
-                      value={eacprd.qty}
-                      onChange={(e) => {
-                        if (e.target.value.match(/^\d{0,}$/)) {
-                          var cpy = [...mycart];
-                          cpy.splice(index, 1, {
-                            ...mycart[index],
-                            qty: e.target.value,
-                            cartprice: eacprd.price * e.target.value,
-                          });
-                          setMycart(cpy);
-                        }
-                      }}
-                      onBlur={(e) => {
-                        if (e.target.value === "" || e.target.value === "0") {
-                          var cpy = [...mycart];
-                          cpy.splice(index, 1, {
-                            ...mycart[index],
-                            qty: 1,
-                            cartprice: eacprd.price * 1,
-                          });
-                          setMycart(cpy);
-                        }
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className="remove-cart-button-div">
-                  <button className="order-cart-button">
-                    <i class="fas fa-box"></i> &nbsp;Place Order
-                  </button>
-                  <button
-                    className="remove-cart-button"
-                    onClick={() => {
-                      deletecart(eacprd)
-                    }}
-                  >
-                    {delload?<Loader/>: <i class="fas fa-trash"></i>}
-                  </button>
-                </div>
-              </div>
-              <div className="e-cart-img-div">
-                <img src={eacprd.img} className="e-cart-img" />
-              </div>
+        {pageloading ? (
+            <div className="cart-loader">
+            <Loader color="#393cff"/>
             </div>
-          )): <div className="wish-empty">
-          You <text style={{ color: "red" }}>haven't</text> added anything
-          to your Cart
-          <h4>
-            <i class="fas fa-shopping-cart" />
-            Shop Now
-          </h4>
-        </div>}
+          ) :<div className="cart-list">
+            {
+mycart.length!==0?mycart.map((eacprd, index) => (
+  <div className="e-cart-prd">
+    <div className="e-cart-prd-des">
+      <div className="e-cart-name">{eacprd.name}</div>
+      <div className="e-cart-rating">
+        <div>
+          {marked(eacprd.rating)} {eacprd.rating}.0
         </div>
+        <div className="stock-div" id="cart-stock-div">
+          {/* {eacprd.stock ? (
+            <div className="stock-in">
+              <i id="cart-stock-icon" class="fas fa-check-circle"></i>
+              Stock Available
+            </div>
+          ) : (
+            <div className="stock-out">Out of Stock !</div>
+          )} */}
+          pack of&nbsp;&nbsp;{eacprd.description.package}
+        </div>
+      </div>
+      <div className="e-cart-price-div">
+        <div className="e-cart-ogn-price">
+          <i class="fas fa-rupee-sign"></i>
+          <h4>{eacprd.cartprice}.00</h4>
+          <div className="strike"></div>
+        </div>
+        <div className="e-cart-offer">
+          <h4>{eacprd.offer}% off</h4>
+        </div>
+        <div className="e-cart-dis">
+          <i class="fas fa-rupee-sign"></i>
+          <h4>
+            {Math.round(eacprd.cartprice * (1 - eacprd.offer / 100))}
+            .00
+          </h4>
+        </div>
+      </div>
+      <div className="qty-div">
+        <div className="cart-add-wish">
+          {eacprd.wishlist ? (
+            <div className="cart-added-wish">
+              <i class="fas fa-heart"></i>{" "}
+              <text>Added to wishList</text>
+            </div>
+          ) : (
+            <div
+              className="cart-unadded-wish"
+              onClick={() => {
+                setPopproduct(eacprd);
+                setWishPop(true);
+              }}
+            >
+              <i class="far fa-heart"></i>{" "}
+              <text>Add to wishList</text>
+            </div>
+          )}
+        </div>
+        <div className="qty-input-div">
+          Qty:
+          <input
+            type="text"
+            className="qty-input"
+            value={eacprd.qty}
+            onChange={(e) => {
+              if (e.target.value.match(/^\d{0,}$/)) {
+                var cpy = [...mycart];
+                cpy.splice(index, 1, {
+                  ...mycart[index],
+                  qty: e.target.value,
+                  cartprice: eacprd.price * e.target.value,
+                });
+                setMycart(cpy);
+              }
+            }}
+            onBlur={(e) => {
+              if (e.target.value === "" || e.target.value === "0") {
+                var cpy = [...mycart];
+                cpy.splice(index, 1, {
+                  ...mycart[index],
+                  qty: 1,
+                  cartprice: eacprd.price * 1,
+                });
+                setMycart(cpy);
+              }
+            }}
+          />
+        </div>
+      </div>
+      <div className="remove-cart-button-div">
+        <button className="order-cart-button">
+          <i class="fas fa-box"></i> &nbsp;Place Order
+        </button>
+        <button
+          className="remove-cart-button"
+          onClick={() => {
+            deletecart(eacprd)
+          }}
+        >
+          {delload?<Loader/>: <i class="fas fa-trash"></i>}
+        </button>
+      </div>
+    </div>
+    <div className="e-cart-img-div">
+      <img src={eacprd.img} className="e-cart-img" />
+    </div>
+  </div>
+)): <div className="wish-empty">
+You <text style={{ color: "red" }}>haven't</text> added anything
+to your Cart
+<h4>
+  <i class="fas fa-shopping-cart" />
+  Shop Now
+</h4>
+</div>
+            }
+          </div>
+          }
+       
       </div>
     </div>
   );
 };
 export default Cart;
+

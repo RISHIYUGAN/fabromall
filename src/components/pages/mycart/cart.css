@@ -1,6 +1,20 @@
 .my-cart-container {
   /* background-color: rgb(243, 243, 243); */
-  padding-bottom: 50px;
+  /* padding-bottom: 50px; */
+}
+.my-cart-container .container{
+  /* border: 1px solid red; */
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+}
+.cart-loader{
+  width: 100%;
+  display: flex;
+  align-self:stretch;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
 }
 .cart-title {
   display: flex;

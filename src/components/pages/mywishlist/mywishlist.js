@@ -62,7 +62,7 @@ const WishList = (props) => {
     AxiosInstance.post("/view-wishlist").then((res) => {
       console.log(res.data);
       setEachWish(res.data);
-      setPageLoading(false);
+      // setPageLoading(false);
     });
   }, []);
 
@@ -263,7 +263,7 @@ const WishList = (props) => {
         </div>
         <div className="each-wishlist-div">
           {pageloading ? (
-            <Loader className="wish-loader" />
+            <Loader color="#393cff"/>
           ) : Object.keys(eachwish).length !== 0 ? (
             Object.keys(eachwish).map((wish) => (
               <div className="each-wishlist" id={"has" + wish + "div"}>

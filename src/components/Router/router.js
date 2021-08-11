@@ -11,6 +11,7 @@ import Cart from "../pages/mycart/cart";
 import WishList from "../pages/mywishlist/mywishlist";
 import MyAccount from "../pages/myaccount/myaccount";
 import OrderSummary from "../pages/order_summary/order_summary";
+import MyOrders from "../pages/my_orders/myorders";
 
 export const history = createBrowserHistory();
 
@@ -27,6 +28,7 @@ export const AppRouter = () => {
           <PrivateRouter path="/my_cart" component={Cart} footer={false} />
           <PrivateRouter path="/my_wishlist" component={WishList} footer={false}/>
           <PrivateRouter path="/my_account" component={MyAccount} footer={false}/>
+          <PrivateRouter path="/my_orders" component={MyOrders} footer={false}/>
           <Route path="" />
         </Switch>
       </div>

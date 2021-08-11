@@ -3,11 +3,12 @@ import "./header.css";
 import { Sidebar } from "./sidebar/sidebar";
 import { NavLink } from "react-router-dom";
 import profile from "../../Assets/images/header/user.jpg"
+import { useEffect } from "react";
 export const Header = () => {
   const [navigation, setNavigation] = useState([
     {
       name: "Home",
-      to: "home",
+      to: "/home",
       icon: (
         <i
           style={{ fontSize: "22px", color: "#636363", marginTop: "-3px" }}
@@ -17,7 +18,7 @@ export const Header = () => {
     },
     {
       name: "My Cart",
-      to: "my_cart",
+      to: "/my_cart",
       icon: (
         <i
           style={{ fontSize: "22px", color: "#636363" }}
@@ -27,7 +28,7 @@ export const Header = () => {
     },
     {
       name: "My WishList",
-      to: "my_wishlist",
+      to: "/my_wishlist",
       icon: (
         <i
           style={{ fontSize: "22px", color: "#636363" }}
@@ -37,7 +38,7 @@ export const Header = () => {
     },
     {
       name: "My Orders",
-      to: "my_orders",
+      to: "/my_orders/order_history",
       icon: (
         <i
           style={{ fontSize: "22px", color: "#636363" }}
@@ -47,7 +48,7 @@ export const Header = () => {
     },
     {
       name: "My Account",
-      to: "my_account",
+      to: "/my_account",
       icon: (
         <i
           style={{ fontSize: "25px", color: "#636363" }}
@@ -57,13 +58,26 @@ export const Header = () => {
     },
     {
       name: "Notifications",
-      to: "notifications",
+      to: "/notifications",
       icon: (
         <i style={{ fontSize: "22px", color: "#636363" }} class="fas fa-bell" />
       ),
     },
   ]);
+ 
   const [sidebar, setSidebar] = useState(false);
+
+  useEffect(()=>{
+    setSidebar(false)
+},[window.location.href])
+useEffect(()=>{
+  if(sidebar){
+    document.getElementById("sidebar").style.transform="translateX(0%)"
+  }
+  else{
+    document.getElementById("sidebar").style.transform="translateX(-100%)"
+  }
+},[sidebar])
   return (
     <div className="header-container">
       <div className="container">
@@ -84,8 +98,7 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      {sidebar && (
-        <div className="sidebar-container">
+        <div className="sidebar-container" id="sidebar">
           <div className="sidebar-wrapper">
             <h4
               className="ExitButton"
@@ -115,7 +128,6 @@ export const Header = () => {
             </div>
           </div>
         </div>
-      )}
     </div>
   );
 };

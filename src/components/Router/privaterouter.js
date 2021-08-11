@@ -27,7 +27,7 @@ const PrivateRouter = ({
       <Header />
       <Route
         {...rest}
-        component={(props) =>
+        render ={(props) =>
           isAuthenticated ? (
             <div>
               <Component {...props} />
