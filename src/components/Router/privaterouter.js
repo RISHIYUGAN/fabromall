@@ -15,7 +15,7 @@ const PrivateRouter = ({
   ...rest
 }) => {
     useEffect(() => {
-      AxiosInstance.post("/suggestions").then((res) => {
+      AxiosInstance.post("/suggestions",localStorage.getItem("tok")).then((res) => {
         console.log(res.data);
         suggestions(res.data.suggestions);
         wishlistnames(res.data.wishlistnames);
