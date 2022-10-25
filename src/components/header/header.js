@@ -4,7 +4,9 @@ import { Sidebar } from "./sidebar/sidebar";
 import { NavLink } from "react-router-dom";
 import profile from "../../Assets/images/header/user.jpg"
 import { useEffect } from "react";
+import AxiosInstance from "../axios/axiosInstance";
 export const Header = () => {
+  const[profilepic,setProfilepic] = useState(profile)
   const [navigation, setNavigation] = useState([
     {
       name: "Home",
@@ -71,6 +73,12 @@ export const Header = () => {
     setSidebar(false)
 },[window.location.href])
 useEffect(()=>{
+  AxiosInstance.post("view-profile").then((res) => {
+    console.log(res.data);
+    res.data.img&&setProfilepic(res.data.img)
+  });
+},[])
+useEffect(()=>{
   if(sidebar){
     document.getElementById("sidebar").style.transform="translateX(0%)"
   }
@@ -109,7 +117,7 @@ useEffect(()=>{
               x
             </h4>
             <div className="profile-pic-div">
-              <div className="profile-pic" style={{backgroundImage:`url("${profile}")`}}></div>
+              <div className="profile-pic" style={{backgroundImage:`url("${profilepic}")`}}></div>
               <div>Tony Stark H</div>
             </div>
             <div className="navigations-div">

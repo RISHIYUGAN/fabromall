@@ -20,7 +20,7 @@ const Cart = () => {
    AxiosInstance.post("view-cart")
    .then((res)=>{
     setMycart(res.data)
-    // setPageloading(false)
+    setPageloading(false)
    })
   },[])
 

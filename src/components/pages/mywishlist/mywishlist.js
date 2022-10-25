@@ -62,7 +62,7 @@ const WishList = (props) => {
     AxiosInstance.post("/view-wishlist").then((res) => {
       console.log(res.data);
       setEachWish(res.data);
-      // setPageLoading(false);
+      setPageLoading(false);
     });
   }, []);
 
