@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const AxiosInstance = axios.create({
-  baseURL: "https://fabro-mall.herokuapp.com/",
+  // baseURL: "https://fabro-mall.herokuapp.com/",
+  baseURL:"http://localhost:3030",
   headers: {
     Authorization: `Bearer ${localStorage.getItem("tok")}`,
   },

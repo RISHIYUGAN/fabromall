@@ -66,6 +66,10 @@ const WishList = (props) => {
     });
   }, []);
 
+  useEffect(()=>{
+   console.log("checking old name=>",oldname)
+  },[oldname])
+
   const addwishlist = (e) => {
     e.preventDefault();
     setAddload(true);
@@ -150,16 +154,16 @@ const WishList = (props) => {
   const addtowish = (e) => {
     e.preventDefault();
     if (adding == false) {
-      setAdding(true);
-      setAddload(true);
+      // setAdding(true);
+      // setAddload(true);
       document.getElementById(oldname.id).style.display = "flex";
       const name = e.target.childNodes[1].textContent;
-      console.log(name, oldname);
+      console.log("recheck oldname=>",name, oldname);
       setWishPop(false);
       AxiosInstance.post("/replace-wishlist", {
         fromwishlistname: oldname.name,
         towishlistname: name,
-        model_number: oldname.model_number,
+        model_number: oldname.product,
       })
         .then((res) => {
           console.log(res.data);
@@ -175,6 +179,8 @@ const WishList = (props) => {
           setAddload(false);
           setAdding(false);
         });
+      setAddload(false);
+      setAdding(false);
     }
   };
   const renamewishlist = (name) => {
@@ -339,6 +345,7 @@ const WishList = (props) => {
                   </div>
                 </div>
                 <div className="wishlist-products">
+                  {console.log("eachWish",eachwish[wish])}
                   {eachwish[wish].map((prd, index) => (
                     <div className="wish-each-product">
                       <div className="del-loader" id={wish + "-" + index}>
@@ -359,12 +366,14 @@ const WishList = (props) => {
                         }
                         option2="Move Product"
                         action2={() => {
+                          console.log(wish + "-" + index);
                           setOldname({
                             name: wish,
                             product: prd.model_number,
                             id: wish + "-" + index,
                           });
                           setWishPop(true);
+                          console.log(oldname)
                         }}
                         fontfamily="poppins-500"
                         drpdwn={wish + "wishprdct"}

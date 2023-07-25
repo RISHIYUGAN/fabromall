@@ -16,6 +16,7 @@ export const ProductSearch = (props) => {
             onBlur={(e) => props.blur(e)}
             name="search"
             id="search-id"
+            style={{flexGrow:1}}
           />
           <div
             id="pseudo-placeholder"

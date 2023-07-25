@@ -34,7 +34,7 @@
   margin-top: 30px;
   /* border: 1px solid red; */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   align-self: stretch;
   flex-grow: 1;

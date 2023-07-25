@@ -117,6 +117,7 @@ const Login = (props) => {
   const logging = (e) => {
     e.preventDefault();
     setLoginLoading(true);
+    console.log("In Logging sand")
     AxiosInstance.post("/login", loginDetails)
       .then((res) => {
         console.log(res.data);

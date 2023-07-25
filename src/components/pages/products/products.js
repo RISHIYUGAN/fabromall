@@ -7,7 +7,7 @@ import AxiosInstance from "../../axios/axiosInstance";
 import { suggestionset } from "../../Redux/action";
 import { ProductSearch } from "../../utility/search/search";
 import { ProductsDisplay } from "./productsdisplay";
-import {Route} from "react-router-dom"
+import { Route } from "react-router-dom"
 
 const Products = (props) => {
   const [productslist, setProductslist] = useState([]);
@@ -20,8 +20,7 @@ const Products = (props) => {
     "Bedsheet",
     "Bath Towel",
     "Quilt",
-    "Window Curtain",
-    "Apron",
+    "Window Curtain"
   ]);
   const [searchfilter, setSearchFilter] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -118,26 +117,26 @@ const Products = (props) => {
   const [disableSort, setDisableSort] = useState(true);
   const [pageLoad, setPageLoad] = useState(true);
 
-  useEffect(()=>{
+  useEffect(() => {
 
     console.log(history)
-  },[])
+  }, [])
 
   useEffect(() => {
     window.addEventListener("scroll", handlescroll);
     console.log(localStorage.getItem("currentpage"))
-    if(localStorage.getItem("currentpage")=="1"){
+    if (localStorage.getItem("currentpage") == "1") {
       const local = localStorage.getItem("prdcts");
       var request = local
         ? JSON.parse(local)
         : [
-            {
-              categoryname: "Bedroom",
-              categoryvalue: "Bedroom",
-              typename: "Bedsheet",
-              typevalue: "Bedsheet",
-            },
-          ];
+          {
+            categoryname: "Bedroom",
+            categoryvalue: "Bedroom",
+            typename: "Bedsheet",
+            typevalue: "Bedsheet",
+          },
+        ];
       setPageLoad(true);
       AxiosInstance.post("/fetch_product", request)
         .then((res) => {
@@ -156,16 +155,16 @@ const Products = (props) => {
           setPageLoad(false);
         });
     }
-    else{
-      var skip=(parseInt(localStorage.getItem("currentpage"))-1)*12
+    else {
+      var skip = (parseInt(localStorage.getItem("currentpage")) - 1) * 12
       AxiosInstance.post("/pagination", {
         skip: skip,
         limit: 12,
       })
         .then((res) => {
           console.log(res.data);
-          var json=JSON.stringify(res.data.current.currentpage)
-          localStorage.setItem("currentpage",json)
+          var json = JSON.stringify(res.data.current.currentpage)
+          localStorage.setItem("currentpage", json)
           setProductslist(res.data.current.products);
           setCurrentPage(res.data.current.currentpage);
           setTotPages(res.data.totalpages)
@@ -173,14 +172,14 @@ const Products = (props) => {
             // console.log("entering",parseInt(localStorage.getItem("currentpage")) - 1,parseInt(localStorage.getItem("currentpage")),parseInt(localStorage.getItem("currentpage")) + 1)
             setPages({
               prepage: res.data.current.currentpage - 1,
-              centpage:res.data.current.currentpage,
+              centpage: res.data.current.currentpage,
               postpage: res.data.current.currentpage + 1,
             });
           }
-          else if(res.data.current.currentpage==res.data.totalpages){
+          else if (res.data.current.currentpage == res.data.totalpages) {
             setPages({
               prepage: res.data.current.currentpage - 2,
-              centpage:res.data.current.currentpage - 1,
+              centpage: res.data.current.currentpage - 1,
               postpage: res.data.current.currentpage,
             });
           }
@@ -211,7 +210,7 @@ const Products = (props) => {
   }, [suggestvalue]);
 
   const handlescroll = () => {
-    if(document.getElementById("suggestion")){
+    if (document.getElementById("suggestion")) {
       if (window.pageYOffset === 0) {
         document.getElementById("suggestion").style.boxShadow = "none";
       } else {
@@ -269,8 +268,8 @@ const Products = (props) => {
       console.log("entering");
       AxiosInstance.post("/fetch_product", searchfilter)
         .then((res) => {
-          const pagejson=JSON.stringify(res.data.current.currentpage)
-          localStorage.setItem("currentpage",pagejson)
+          const pagejson = JSON.stringify(res.data.current.currentpage)
+          localStorage.setItem("currentpage", pagejson)
           console.log(res.data);
           setFilterState({});
           setFiltervalues({});
@@ -320,8 +319,8 @@ const Products = (props) => {
             limit: 12,
           })
             .then((res) => {
-              const json=JSON.stringify(number)
-              localStorage.setItem("currentpage",json)
+              const json = JSON.stringify(number)
+              localStorage.setItem("currentpage", json)
               console.log(res.data.current.products);
               setProductslist(res.data.current.products);
               setCurrentPage(number);
@@ -404,17 +403,17 @@ const Products = (props) => {
     }
   };
 
-  const eachproduct=(prd)=>{
-    var json=JSON.stringify({category:prd.category,type:prd.type,model_number:prd.model_number})
-   localStorage.setItem('eachproduct',json)
-   window.scrollTo(0,0)
-   history.push("/eachproduct")
+  const eachproduct = (prd) => {
+    var json = JSON.stringify({ category: prd.category, type: prd.type, model_number: prd.model_number })
+    localStorage.setItem('eachproduct', json)
+    window.scrollTo(0, 0)
+    history.push("/eachproduct")
   }
   return (
     <div className="products-container">
       {console.log("filtervalues---", filtervalues)}
-      <div id="suggestion" className="suggestions-div">
-        <div className="container">
+      <div className="container">
+        <div id="suggestion" className="suggestions-div">
           <div className="suggestions-wrapper">
             <div className="suggestions">
               {suggest.map((sug) => (
@@ -485,10 +484,10 @@ const Products = (props) => {
                                 .toLowerCase()}`
                             ]
                               ? filterState[
-                                  `${option.placeholder
-                                    .split(" ")[0]
-                                    .toLowerCase()}`
-                                ]
+                              `${option.placeholder
+                                .split(" ")[0]
+                                .toLowerCase()}`
+                              ]
                               : null
                           }
                           options={option.value}
@@ -598,7 +597,7 @@ const Products = (props) => {
                 <i class="fas fa-circle-notch fa-spin"></i>
               </div>
             ) : (
-              <ProductsDisplay eachproduct={(product)=>eachproduct(product)} productslist={productslist} marked={(rating)=>marked(rating)}/>
+              <ProductsDisplay eachproduct={(product) => eachproduct(product)} productslist={productslist} marked={(rating) => marked(rating)} />
             )}
           </div>
           <div className="pagination">
